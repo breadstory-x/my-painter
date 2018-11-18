@@ -11,7 +11,7 @@ public:
     void setEnd(QPoint e){ end = e; }
     QPoint getStart(){ return start; }
     QPoint getEnd(){ return end; }
-    virtual void paint(QPixmap *pix){}
+    virtual void paint(QPainter &painter)=0;
 
 protected:
         QPoint start;

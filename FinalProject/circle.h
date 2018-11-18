@@ -6,7 +6,7 @@ class Circle:public Shape
 {
 public:
     Circle();
-    void paint(QPixmap *pix);
+    void paint(QPainter &painter);
 };
 
 #endif // CIRCLE_H

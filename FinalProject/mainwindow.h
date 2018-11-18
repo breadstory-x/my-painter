@@ -20,10 +20,16 @@ public:
 
 signals:
     void changeCurrentShape(shapeCode newShape);
+    void changePainterWidth(int x);
 
 public slots:
     void drawLineActionTriggered();
-    void drawRectActionTriggered();
+    void drawEllipseActionTriggered();
+    void drawCircleActionTriggered();
+    void drawPolygonActionTriggered();
+    void setWidth1();
+    void setWidth3();
+    void setWidth5();
 
 
 private:
@@ -31,3 +37,5 @@ private:
 };
 
 #endif // MAINWINDOW_H
+
+

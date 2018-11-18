@@ -6,7 +6,7 @@ Line::Line()
 }
 
 
-int prePrint(QPoint startPos, QPoint endPos)
+int prePrint_poly(QPoint startPos, QPoint endPos)
 {
     int x0 = startPos.x();
     int y0 = startPos.y();
@@ -24,12 +24,8 @@ int prePrint(QPoint startPos, QPoint endPos)
         return 4;
 }
 
-void Line::paint(QPixmap *pix)
+void Line::paint(QPainter &painter)
 {
-    //QPainter painter(pixx);
-    //painter.setPen(Qt::black);
-    //painter.drawLine(start,end);
-
     QPoint newstart = start, newend = end;
     if(end.x() < newstart.x())
     {
@@ -38,9 +34,90 @@ void Line::paint(QPixmap *pix)
         newend = temp;
     }
 
-    QPainter painter(pix);
-    painter.setPen(Qt::black);
     QPoint point;
+
+    int x = newstart.x();
+    int y = newstart.y();
+    int dx = newend.x() - newstart.x();
+    int dy = newend.y()-newstart.y();
+    int p = 2*dy-dx;
+
+    switch(prePrint_poly(newstart, newend))
+    {
+    case 1:
+        for(;x < newend.x();x++)
+        {
+            point.setX(x);
+            point.setY(y);
+            painter.drawPoint(point);
+            if(p >= 0)
+            {
+                y++;
+                p += 2*(dy-dx);
+            }
+            else
+                p+= 2*dy;
+        }
+        break;
+    case 2:
+        p = 2*dy+dx;
+        for(;x < newend.x();x++)
+        {
+            point.setX(x);
+            point.setY(y);
+            painter.drawPoint(point);
+            if(p >= 0)
+            {
+                p += 2*(dy);
+            }
+            else
+            {
+                y--;
+                p+= 2*(dy+dx);
+            }
+        }
+        break;
+    case 3:
+        p = 2*dx -dy;
+        for(;y < newend.y();y++)
+        {
+            point.setX(x);
+            point.setY(y);
+            painter.drawPoint(point);
+            if(p >= 0)
+            {
+                x++;
+                p += 2*(dx-dy);
+            }
+            else
+            {
+                p+= 2*(dx);
+            }
+        }
+        break;
+    case 4:
+        p = -2*dx - dy;
+        for(;y > newend.y();y--)
+        {
+            point.setX(x);
+            point.setY(y);
+            painter.drawPoint(point);
+            if(p >= 0)
+            {
+                p -= 2*(dx);
+            }
+            else
+            {
+                x++;
+                p -= 2*(dx+dy);
+            }
+        }
+        break;
+
+    }
+
+
+/*中点画线算法
     int a = newstart.y() - newend.y();
     int b = newend.x() - newstart.x();
 
@@ -143,5 +220,5 @@ void Line::paint(QPixmap *pix)
     default:
         break;
     }
-
+*/
 }

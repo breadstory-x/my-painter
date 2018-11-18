@@ -30,7 +30,19 @@
     <addaction name="action_O"/>
     <addaction name="action_S"/>
    </widget>
+   <widget class="QMenu" name="menu">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string>画笔宽度</string>
+    </property>
+    <addaction name="action_width1"/>
+    <addaction name="action_width3"/>
+    <addaction name="action_width5"/>
+   </widget>
    <addaction name="menu_F"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -40,41 +52,90 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionLine"/>
+   <addaction name="actionCircle"/>
    <addaction name="actionEllipse"/>
+   <addaction name="actionPolygon"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLine">
-   <property name="icon">
-    <iconset>
-     <normaloff>../Line.PNG</normaloff>../Line.PNG</iconset>
-   </property>
    <property name="text">
     <string>Line</string>
    </property>
    <property name="toolTip">
     <string>Line</string>
+   </property>
+   <property name="statusTip">
+    <string>draw a Line</string>
+   </property>
+   <property name="shortcut">
+    <string>1</string>
    </property>
   </action>
   <action name="actionEllipse">
-   <property name="icon">
-    <iconset>
-     <normaloff>../ellipse.PNG</normaloff>../ellipse.PNG</iconset>
-   </property>
    <property name="text">
     <string>Ellipse</string>
    </property>
    <property name="toolTip">
     <string>Ellipse</string>
+   </property>
+   <property name="statusTip">
+    <string>draw a ellipse</string>
+   </property>
+   <property name="shortcut">
+    <string>3</string>
    </property>
   </action>
   <action name="action_O">
    <property name="text">
     <string>打开(&amp;O)</string>
    </property>
+   <property name="statusTip">
+    <string>目前暂未完成</string>
+   </property>
   </action>
   <action name="action_S">
    <property name="text">
     <string>保存(&amp;S)</string>
+   </property>
+   <property name="statusTip">
+    <string>目前暂未完成</string>
+   </property>
+  </action>
+  <action name="actionCircle">
+   <property name="text">
+    <string>Circle</string>
+   </property>
+   <property name="toolTip">
+    <string>Circle</string>
+   </property>
+   <property name="statusTip">
+    <string>draw a circle</string>
+   </property>
+   <property name="shortcut">
+    <string>2</string>
+   </property>
+  </action>
+  <action name="action_width1">
+   <property name="text">
+    <string>细(1)</string>
+   </property>
+  </action>
+  <action name="action_width3">
+   <property name="text">
+    <string>中(3)</string>
+   </property>
+  </action>
+  <action name="action_width5">
+   <property name="text">
+    <string>粗(5)</string>
+   </property>
+  </action>
+  <action name="actionPolygon">
+   <property name="text">
+    <string>Polygon</string>
+   </property>
+   <property name="toolTip">
+    <string>Polygon</string>
    </property>
   </action>
  </widget>

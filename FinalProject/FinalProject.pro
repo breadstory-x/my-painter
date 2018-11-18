@@ -29,14 +29,18 @@ SOURCES += \
     mypainter.cpp \
     shape.cpp \
     line.cpp \
-    circle.cpp
+    circle.cpp \
+    ellipse.cpp \
+    polygon.cpp
 
 HEADERS += \
         mainwindow.h \
     mypainter.h \
     shape.h \
     line.h \
-    circle.h
+    circle.h \
+    ellipse.h \
+    polygon.h
 
 FORMS += \
         mainwindow.ui

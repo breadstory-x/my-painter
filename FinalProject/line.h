@@ -6,7 +6,7 @@ class Line:public Shape
 {
 public:
     Line();
-    void paint(QPixmap *pix);
+    void paint(QPainter &painter);
 };
 
 #endif // LINE_H

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include<QLabel>
 #include<QComboBox>
+#include<QColor>
 #include "mypainter.h"
 
 namespace Ui {
@@ -19,17 +20,20 @@ public:
     ~MainWindow();
 
 signals:
-    void changeCurrentShape(shapeCode newShape);
+    void changeCurrentMode(modeCode newMode);
     void changePainterWidth(int x);
+    void changeCurrentColor(QColor c);
 
 public slots:
     void drawLineActionTriggered();
     void drawEllipseActionTriggered();
     void drawCircleActionTriggered();
     void drawPolygonActionTriggered();
+    void fillActionTriggered();
     void setWidth1();
     void setWidth3();
     void setWidth5();
+    void ColorButtonClicked();
 
 
 private:

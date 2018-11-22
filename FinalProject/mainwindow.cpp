@@ -1,5 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QColorDialog>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     styleComboBox->addItem("DashDotDotLine",static_cast<int>(Qt::DashDotDotLine));
 */
 
-    setWindowTitle("xwj's paint");
+    setWindowTitle("cg2018:my paint");
     MyPainter *paintWidget = new MyPainter(this);
     setCentralWidget(paintWidget);
 
@@ -25,12 +27,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionEllipse, SIGNAL(triggered()), this, SLOT(drawEllipseActionTriggered()));
     connect(ui->actionCircle, SIGNAL(triggered()), this, SLOT(drawCircleActionTriggered()));
     connect(ui->actionPolygon, SIGNAL(triggered()), this, SLOT(drawPolygonActionTriggered()));
-    connect(this, SIGNAL(changeCurrentShape(shapeCode)), paintWidget, SLOT(setCurrentShape(shapeCode)));
+    connect(ui->actionFill,SIGNAL(triggered()), this, SLOT(fillActionTriggered()));
+    connect(this, SIGNAL(changeCurrentMode(modeCode)), paintWidget, SLOT(setCurrentMode(modeCode)));
 
     connect(ui->action_width1, SIGNAL(triggered()), this, SLOT(setWidth1()));
     connect(ui->action_width3, SIGNAL(triggered()), this, SLOT(setWidth3()));
     connect(ui->action_width5, SIGNAL(triggered()), this, SLOT(setWidth5()));
     connect(this, SIGNAL(changePainterWidth(int)), paintWidget, SLOT(setCurrentWidth(int)));
+
+
+    connect(ui->actionColor, SIGNAL(triggered()), this, SLOT(ColorButtonClicked()));
+    connect(this, SIGNAL(changeCurrentColor(QColor)),paintWidget,SLOT(setCurrentColor(QColor)));
 }
 
 MainWindow::~MainWindow()
@@ -40,22 +47,47 @@ MainWindow::~MainWindow()
 
 void MainWindow::drawLineActionTriggered()
 {
-    emit changeCurrentShape(code_line);
+    ui->actionCircle->setChecked(false);
+    ui->actionEllipse->setChecked(false);
+    ui->actionPolygon->setChecked(false);
+    ui->actionFill->setChecked(false);
+    emit changeCurrentMode(code_line);
 }
 
 void MainWindow::drawEllipseActionTriggered()
 {
-    emit changeCurrentShape(code_ellipse);
+    ui->actionLine->setChecked(false);
+    ui->actionCircle->setChecked(false);
+    ui->actionPolygon->setChecked(false);
+    ui->actionFill->setChecked(false);
+    emit changeCurrentMode(code_ellipse);
 }
 
 void MainWindow::drawCircleActionTriggered()
 {
-    emit changeCurrentShape(code_circle);
+    ui->actionLine->setChecked(false);
+    ui->actionEllipse->setChecked(false);
+    ui->actionPolygon->setChecked(false);
+    ui->actionFill->setChecked(false);
+    emit changeCurrentMode(code_circle);
 }
 
 void MainWindow::drawPolygonActionTriggered()
 {
-    emit changeCurrentShape(code_polygon);
+    ui->actionLine->setChecked(false);
+    ui->actionCircle->setChecked(false);
+    ui->actionEllipse->setChecked(false);
+    ui->actionFill->setChecked(false);
+    emit changeCurrentMode(code_polygon);
+}
+
+void MainWindow::fillActionTriggered()
+{
+    ui->actionLine->setChecked(false);
+    ui->actionCircle->setChecked(false);
+    ui->actionEllipse->setChecked(false);
+    ui->actionPolygon->setChecked(false);
+    emit changeCurrentMode(code_fill);
 }
 
 
@@ -72,4 +104,10 @@ void MainWindow::setWidth3()
 void MainWindow::setWidth5()
 {
     emit changePainterWidth(5);
+}
+
+void MainWindow::ColorButtonClicked()
+{
+    QColor color = QColorDialog::getColor(Qt::black);
+    emit changeCurrentColor(color);
 }

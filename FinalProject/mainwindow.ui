@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>539</width>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>539</width>
      <height>23</height>
     </rect>
    </property>
@@ -45,19 +45,41 @@
    <addaction name="menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="allowedAreas">
+    <set>Qt::AllToolBarAreas</set>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
+   <addaction name="separator"/>
    <addaction name="actionLine"/>
-   <addaction name="actionCircle"/>
    <addaction name="actionEllipse"/>
+   <addaction name="actionCircle"/>
    <addaction name="actionPolygon"/>
+   <addaction name="actionFill"/>
+   <addaction name="separator"/>
+   <addaction name="actionColor"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLine">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/直线.bmp</normaloff>../图标/直线.bmp</iconset>
+   </property>
    <property name="text">
     <string>Line</string>
    </property>
@@ -72,6 +94,13 @@
    </property>
   </action>
   <action name="actionEllipse">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/椭圆.bmp</normaloff>../图标/椭圆.bmp</iconset>
+   </property>
    <property name="text">
     <string>Ellipse</string>
    </property>
@@ -102,6 +131,13 @@
    </property>
   </action>
   <action name="actionCircle">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/圆.bmp</normaloff>../图标/圆.bmp</iconset>
+   </property>
    <property name="text">
     <string>Circle</string>
    </property>
@@ -131,11 +167,87 @@
    </property>
   </action>
   <action name="actionPolygon">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/多边形.bmp</normaloff>../图标/多边形.bmp</iconset>
+   </property>
    <property name="text">
     <string>Polygon</string>
    </property>
    <property name="toolTip">
     <string>Polygon</string>
+   </property>
+   <property name="statusTip">
+    <string>draw a polygon</string>
+   </property>
+  </action>
+  <action name="actionColor">
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/颜色.bmp</normaloff>../图标/颜色.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>颜色设置</string>
+   </property>
+   <property name="toolTip">
+    <string>change color</string>
+   </property>
+   <property name="statusTip">
+    <string>颜色设置</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/打开.bmp</normaloff>../图标/打开.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>打开文件</string>
+   </property>
+   <property name="toolTip">
+    <string>打开文件（未实现）</string>
+   </property>
+   <property name="statusTip">
+    <string>打开文件（未实现）</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/保存.bmp</normaloff>../图标/保存.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>保存文件</string>
+   </property>
+   <property name="toolTip">
+    <string>保存文件（未实现）</string>
+   </property>
+   <property name="statusTip">
+    <string>保存文件（未实现）</string>
+   </property>
+  </action>
+  <action name="actionFill">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/颜料桶.bmp</normaloff>../图标/颜料桶.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>颜色填充</string>
+   </property>
+   <property name="toolTip">
+    <string>颜色填充</string>
+   </property>
+   <property name="statusTip">
+    <string>颜色填充</string>
    </property>
   </action>
  </widget>

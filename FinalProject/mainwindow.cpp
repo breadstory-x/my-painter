@@ -1,6 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QColorDialog>
+#include <QFileDialog>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -35,9 +36,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->action_width5, SIGNAL(triggered()), this, SLOT(setWidth5()));
     connect(this, SIGNAL(changePainterWidth(int)), paintWidget, SLOT(setCurrentWidth(int)));
 
-
     connect(ui->actionColor, SIGNAL(triggered()), this, SLOT(ColorButtonClicked()));
     connect(this, SIGNAL(changeCurrentColor(QColor)),paintWidget,SLOT(setCurrentColor(QColor)));
+
+    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(SaveButtonClicked()));
+    connect(this, SIGNAL(selectFilePath(QString)),paintWidget,SLOT(SaveFile(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -90,7 +93,6 @@ void MainWindow::fillActionTriggered()
     emit changeCurrentMode(code_fill);
 }
 
-
 void MainWindow::setWidth1()
 {
     emit changePainterWidth(1);
@@ -110,4 +112,12 @@ void MainWindow::ColorButtonClicked()
 {
     QColor color = QColorDialog::getColor(Qt::black);
     emit changeCurrentColor(color);
+}
+
+void MainWindow::SaveButtonClicked()
+{
+    QString file_path = QFileDialog::getSaveFileName(this, "Select Path", "./NewPicture","Images (*.jpg);;All Files (*)");//第三个参数为打开对话框时的路径
+    if(!file_path.isEmpty())
+        emit selectFilePath(file_path);
+    //qDebug() << file_path;
 }

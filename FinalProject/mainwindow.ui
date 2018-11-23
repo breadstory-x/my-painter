@@ -51,6 +51,9 @@
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -67,6 +70,7 @@
    <addaction name="actionFill"/>
    <addaction name="separator"/>
    <addaction name="actionColor"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLine">
@@ -205,7 +209,7 @@
      <normaloff>../图标/打开.bmp</normaloff>../图标/打开.bmp</iconset>
    </property>
    <property name="text">
-    <string>打开文件</string>
+    <string>打开</string>
    </property>
    <property name="toolTip">
     <string>打开文件（未实现）</string>
@@ -220,10 +224,10 @@
      <normaloff>../图标/保存.bmp</normaloff>../图标/保存.bmp</iconset>
    </property>
    <property name="text">
-    <string>保存文件</string>
+    <string>保存</string>
    </property>
    <property name="toolTip">
-    <string>保存文件（未实现）</string>
+    <string>保存（未实现）</string>
    </property>
    <property name="statusTip">
     <string>保存文件（未实现）</string>
@@ -241,7 +245,7 @@
      <normaloff>../图标/颜料桶.bmp</normaloff>../图标/颜料桶.bmp</iconset>
    </property>
    <property name="text">
-    <string>颜色填充</string>
+    <string>填充</string>
    </property>
    <property name="toolTip">
     <string>颜色填充</string>

@@ -23,6 +23,7 @@ signals:
     void changeCurrentMode(modeCode newMode);
     void changePainterWidth(int x);
     void changeCurrentColor(QColor c);
+    void selectFilePath(QString s);
 
 public slots:
     void drawLineActionTriggered();
@@ -34,6 +35,7 @@ public slots:
     void setWidth3();
     void setWidth5();
     void ColorButtonClicked();
+    void SaveButtonClicked();
 
 
 private:

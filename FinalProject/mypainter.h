@@ -33,7 +33,12 @@ public slots:
         {
             color = c;
         }
-
+        void SaveFile(QString s)
+        {
+            //qDebug()<<s;
+            QImage image = pix->toImage();
+            image.save(s,"JPG");
+        }
 private:
     QPixmap *pix;//画布
     QPixmap *temppix;//临时画布

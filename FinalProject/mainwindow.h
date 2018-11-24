@@ -29,6 +29,7 @@ public slots:
     void drawLineActionTriggered();
     void drawEllipseActionTriggered();
     void drawCircleActionTriggered();
+    void drawRectActionTriggered();
     void drawPolygonActionTriggered();
     void fillActionTriggered();
     void setWidth1();
@@ -36,6 +37,7 @@ public slots:
     void setWidth5();
     void ColorButtonClicked();
     void SaveButtonClicked();
+    void OpenButtonClicked();
 
 
 private:

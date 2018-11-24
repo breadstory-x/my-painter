@@ -6,13 +6,16 @@
 #include<QPainter>
 #include<QPixmap>
 #include<QColor>
+#include<QPoint>
+#include<QMessageBox>
 #include"shape.h"
 #include"line.h"
 #include"circle.h"
 #include"ellipse.h"
 #include"polygon.h"
+#include"rectangle.h"
 
-enum modeCode { code_line, code_circle, code_ellipse, code_polygon, code_fill};
+enum modeCode { code_line, code_rect, code_circle, code_ellipse, code_polygon, code_fill};
 
 class MyPainter : public QWidget
 {
@@ -38,11 +41,17 @@ public slots:
             //qDebug()<<s;
             QImage image = pix->toImage();
             image.save(s,"JPG");
+            QMessageBox::about(NULL,  u8"保存成功！", u8"保存成功！");
         }
 private:
     QPixmap *pix;//画布
     QPixmap *temppix;//临时画布
     bool isDrawing;//是否在绘图
+    bool isEdit;//是否在编辑
+    bool isStart;//是否编辑起始点
+    bool LBDown;//鼠标是否按下
+    bool poly_finish;//多边形是否画完，对应是否按下右键
+    int poly_edit_num;
     Shape *shape;//图形对象，用于调用派生类的绘图函数
     Polygon *polygon;//多边形对象
     int modecode;//当前选择的形状

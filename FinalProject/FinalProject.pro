@@ -31,7 +31,8 @@ SOURCES += \
     line.cpp \
     circle.cpp \
     ellipse.cpp \
-    polygon.cpp
+    polygon.cpp \
+    rectangle.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +41,8 @@ HEADERS += \
     line.h \
     circle.h \
     ellipse.h \
-    polygon.h
+    polygon.h \
+    rectangle.h
 
 FORMS += \
         mainwindow.ui

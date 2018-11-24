@@ -66,6 +66,7 @@
    <addaction name="actionLine"/>
    <addaction name="actionEllipse"/>
    <addaction name="actionCircle"/>
+   <addaction name="actionRect"/>
    <addaction name="actionPolygon"/>
    <addaction name="actionFill"/>
    <addaction name="separator"/>
@@ -85,13 +86,22 @@
      <normaloff>../图标/直线.bmp</normaloff>../图标/直线.bmp</iconset>
    </property>
    <property name="text">
-    <string>Line</string>
+    <string>直线</string>
    </property>
    <property name="toolTip">
     <string>Line</string>
    </property>
    <property name="statusTip">
-    <string>draw a Line</string>
+    <string>绘制直线</string>
+   </property>
+   <property name="whatsThis">
+    <string/>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="shortcut">
     <string>1</string>
@@ -106,32 +116,54 @@
      <normaloff>../图标/椭圆.bmp</normaloff>../图标/椭圆.bmp</iconset>
    </property>
    <property name="text">
-    <string>Ellipse</string>
+    <string>椭圆</string>
    </property>
    <property name="toolTip">
     <string>Ellipse</string>
    </property>
    <property name="statusTip">
-    <string>draw a ellipse</string>
+    <string>绘制椭圆</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="shortcut">
-    <string>3</string>
+    <string>2</string>
    </property>
   </action>
   <action name="action_O">
    <property name="text">
-    <string>打开(&amp;O)</string>
+    <string>打开</string>
    </property>
    <property name="statusTip">
-    <string>目前暂未完成</string>
+    <string/>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="action_S">
    <property name="text">
-    <string>保存(&amp;S)</string>
+    <string>保存</string>
    </property>
    <property name="statusTip">
-    <string>目前暂未完成</string>
+    <string/>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionCircle">
@@ -143,31 +175,51 @@
      <normaloff>../图标/圆.bmp</normaloff>../图标/圆.bmp</iconset>
    </property>
    <property name="text">
-    <string>Circle</string>
+    <string>圆</string>
    </property>
    <property name="toolTip">
     <string>Circle</string>
    </property>
    <property name="statusTip">
-    <string>draw a circle</string>
+    <string>绘制圆</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
    </property>
    <property name="shortcut">
-    <string>2</string>
+    <string>3</string>
    </property>
   </action>
   <action name="action_width1">
    <property name="text">
     <string>细(1)</string>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
   </action>
   <action name="action_width3">
    <property name="text">
     <string>中(3)</string>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
   </action>
   <action name="action_width5">
    <property name="text">
     <string>粗(5)</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
    </property>
   </action>
   <action name="actionPolygon">
@@ -179,13 +231,21 @@
      <normaloff>../图标/多边形.bmp</normaloff>../图标/多边形.bmp</iconset>
    </property>
    <property name="text">
-    <string>Polygon</string>
+    <string>多边形</string>
    </property>
    <property name="toolTip">
     <string>Polygon</string>
    </property>
    <property name="statusTip">
-    <string>draw a polygon</string>
+    <string>绘制多边形</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>5</string>
    </property>
   </action>
   <action name="actionColor">
@@ -200,7 +260,15 @@
     <string>change color</string>
    </property>
    <property name="statusTip">
-    <string>颜色设置</string>
+    <string>设置当前画笔颜色</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>7</string>
    </property>
   </action>
   <action name="actionOpen">
@@ -212,10 +280,15 @@
     <string>打开</string>
    </property>
    <property name="toolTip">
-    <string>打开文件（未实现）</string>
+    <string>打开文件</string>
    </property>
    <property name="statusTip">
-    <string>打开文件（未实现）</string>
+    <string>打开文件</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
    </property>
   </action>
   <action name="actionSave">
@@ -227,10 +300,15 @@
     <string>保存</string>
    </property>
    <property name="toolTip">
-    <string>保存（未实现）</string>
+    <string>保存</string>
    </property>
    <property name="statusTip">
-    <string>保存文件（未实现）</string>
+    <string>保存文件</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
    </property>
   </action>
   <action name="actionFill">
@@ -252,6 +330,40 @@
    </property>
    <property name="statusTip">
     <string>颜色填充</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>6</string>
+   </property>
+  </action>
+  <action name="actionRect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/矩形.bmp</normaloff>../图标/矩形.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>矩形</string>
+   </property>
+   <property name="toolTip">
+    <string>Rect</string>
+   </property>
+   <property name="statusTip">
+    <string>绘制矩形</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>4</string>
    </property>
   </action>
  </widget>

@@ -6,7 +6,7 @@ Line::Line()
 }
 
 
-int prePrint_poly(QPoint startPos, QPoint endPos)
+int prePrint_line(QPoint startPos, QPoint endPos)
 {
     int x0 = startPos.x();
     int y0 = startPos.y();
@@ -42,7 +42,7 @@ void Line::paint(QPainter &painter)
     int dy = newend.y()-newstart.y();
     int p = 2*dy-dx;
 
-    switch(prePrint_poly(newstart, newend))
+    switch(prePrint_line(newstart, newend))
     {
     case 1:
         for(;x < newend.x();x++)

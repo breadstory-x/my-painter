@@ -15,7 +15,7 @@ int Polygon::geti()
     return i;
 }
 
-int prePrint(QPoint startPos, QPoint endPos)
+int prePrint_poly(QPoint startPos, QPoint endPos)
 {
     int x0 = startPos.x();
     int y0 = startPos.y();
@@ -52,7 +52,7 @@ void Polygon::paint(QPainter &painter, int i, int j)
     int dy = newend.y()-newstart.y();
     int p = 2*dy-dx;
 
-    switch(prePrint(newstart, newend))
+    switch(prePrint_poly(newstart, newend))
     {
     case 1:
         for(;x < newend.x();x++)

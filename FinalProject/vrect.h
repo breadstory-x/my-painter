@@ -1,13 +1,14 @@
-﻿#ifndef CIRCLE_H
-#define CIRCLE_H
+﻿#ifndef VRECT_H
+#define VRECT_H
 #include"shape.h"
 
-class Circle:public Shape
+
+class Vrect:public Shape
 {
 public:
-    Circle();
+    Vrect();
     void paint(QPainter &painter);
     void rotate_paint(QPainter &painter, int d);
 };
 
-#endif // CIRCLE_H
+#endif // VRECT_H

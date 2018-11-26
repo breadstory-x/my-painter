@@ -68,3 +68,9 @@ void Circle::paint(QPainter &painter)
         painter.drawPoint(point);
     }
 }
+
+
+void Circle::rotate_paint(QPainter &painter, int d)
+{
+
+}

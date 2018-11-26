@@ -88,3 +88,8 @@ void Ellipse::paint(QPainter &painter)
     }
 
 }
+
+void Ellipse::rotate_paint(QPainter &painter, int d)
+{
+
+}

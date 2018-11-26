@@ -1,5 +1,5 @@
 ﻿#include "line.h"
-
+#include<QDebug>
 Line::Line()
 {
 
@@ -27,7 +27,7 @@ int prePrint_line(QPoint startPos, QPoint endPos)
 void Line::paint(QPainter &painter)
 {
     QPoint newstart = start, newend = end;
-    if(end.x() < newstart.x())
+    if(newend.x() < newstart.x())
     {
         QPoint temp = newstart;
         newstart = newend;
@@ -221,4 +221,10 @@ void Line::paint(QPainter &painter)
         break;
     }
 */
+}
+
+void Line::rotate_paint(QPainter &painter, int d)
+{
+    end = rotate_point(start, end, d);
+    paint(painter);
 }

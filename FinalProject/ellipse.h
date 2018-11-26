@@ -7,6 +7,7 @@ class Ellipse:public Shape
 public:
     Ellipse();
     void paint(QPainter &painter);
+    void rotate_paint(QPainter &painter, int d);
 };
 
 #endif // ELLIPSE_H

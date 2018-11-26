@@ -6,20 +6,37 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>539</width>
-    <height>418</height>
+    <width>681</width>
+    <height>470</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>50</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>539</width>
+     <width>681</width>
      <height>23</height>
     </rect>
    </property>
@@ -27,6 +44,7 @@
     <property name="title">
      <string>文件(&amp;F)</string>
     </property>
+    <addaction name="actionNew"/>
     <addaction name="action_O"/>
     <addaction name="action_S"/>
    </widget>
@@ -45,11 +63,22 @@
    <addaction name="menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
    <property name="allowedAreas">
     <set>Qt::AllToolBarAreas</set>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
    </property>
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -58,7 +87,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
@@ -72,6 +101,9 @@
    <addaction name="separator"/>
    <addaction name="actionColor"/>
    <addaction name="separator"/>
+   <addaction name="actionSelect"/>
+   <addaction name="actionCut"/>
+   <addaction name="actionTransform"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLine">
@@ -135,6 +167,10 @@
    </property>
   </action>
   <action name="action_O">
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/打开.bmp</normaloff>../图标/打开.bmp</iconset>
+   </property>
    <property name="text">
     <string>打开</string>
    </property>
@@ -151,6 +187,10 @@
    </property>
   </action>
   <action name="action_S">
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/保存.bmp</normaloff>../图标/保存.bmp</iconset>
+   </property>
    <property name="text">
     <string>保存</string>
    </property>
@@ -364,6 +404,97 @@
    </property>
    <property name="shortcut">
     <string>4</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/新建.bmp</normaloff>../图标/新建.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>新建</string>
+   </property>
+   <property name="statusTip">
+    <string>新建一个文件</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/裁剪.bmp</normaloff>../图标/裁剪.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>裁剪</string>
+   </property>
+   <property name="toolTip">
+    <string>裁剪直线，当选择按钮按下时激活</string>
+   </property>
+   <property name="statusTip">
+    <string>裁剪直线，当选择按钮按下时激活</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionTransform">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/√.bmp</normaloff>../图标/√.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>变换</string>
+   </property>
+   <property name="toolTip">
+    <string>变换</string>
+   </property>
+  </action>
+  <action name="actionRotate">
+   <property name="text">
+    <string>旋转</string>
+   </property>
+   <property name="toolTip">
+    <string>旋转</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑 Light</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../图标/矩形选择框.bmp</normaloff>../图标/矩形选择框.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>选择框</string>
+   </property>
+   <property name="toolTip">
+    <string>选择裁剪框</string>
+   </property>
+   <property name="statusTip">
+    <string>选择裁剪框</string>
+   </property>
+  </action>
+  <action name="actionArrowSelect">
+   <property name="text">
+    <string>选择</string>
    </property>
   </action>
  </widget>

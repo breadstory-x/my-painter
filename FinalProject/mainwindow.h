@@ -24,6 +24,11 @@ signals:
     void changePainterWidth(int x);
     void changeCurrentColor(QColor c);
     void selectFilePath(QString s);
+    void newPixmap();
+    void cutPicture();
+
+    void setRotation(int r);
+    void setScale(qreal s);
 
 public slots:
     void drawLineActionTriggered();
@@ -32,12 +37,19 @@ public slots:
     void drawRectActionTriggered();
     void drawPolygonActionTriggered();
     void fillActionTriggered();
+    void transfromActionTriggered();
     void setWidth1();
     void setWidth3();
     void setWidth5();
     void ColorButtonClicked();
     void SaveButtonClicked();
     void OpenButtonClicked();
+    void NewButtonClicked();
+    void SelectButtonClicked();
+    void cutButtonClicked();
+
+    void changeRotation(int r);
+    void changeScale(int s);
 
 
 private:

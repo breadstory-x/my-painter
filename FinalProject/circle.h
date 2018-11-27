@@ -7,7 +7,7 @@ class Circle:public Shape
 public:
     Circle();
     void paint(QPainter &painter);
-    void rotate_paint(QPainter &painter, int d);
+    void rotate(Shape *s, int d);
 };
 
 #endif // CIRCLE_H

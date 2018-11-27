@@ -223,8 +223,8 @@ void Line::paint(QPainter &painter)
 */
 }
 
-void Line::rotate_paint(QPainter &painter, int d)
+void Line::rotate(Shape *s, int d)
 {
-    end = rotate_point(start, end, d);
-    paint(painter);
+    start = s->getStart();
+    end = rotate_point(s->getStart(),s->getEnd(),d);
 }

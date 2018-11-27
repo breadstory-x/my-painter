@@ -126,3 +126,42 @@ void Polygon::paint(QPainter &painter, int i, int j)
 
     }
 }
+
+QPoint Polygon::rotate_point(QPoint o, QPoint p, int d)
+{
+    QPoint result;
+    double angle = (double)d*3.1415926/180;
+    result.setX((p.x()-o.x())*cos(angle)-(p.y()-o.y())*sin(angle)+o.x());
+    result.setY((p.x()-o.x())*sin(angle)+(p.y()-o.y())*cos(angle)+o.y());
+    return result;
+}
+
+void Polygon::rotate(Polygon *p, int d)
+{
+    poly_point.clear();
+    poly_point.push_back(p->getPoint()[0]);
+    for(int i = 1; i<p->getPoint().size();i++)
+        poly_point.push_back(rotate_point(p->getPoint()[0],p->getPoint()[i],d));
+}
+
+QPoint Polygon::scale_point(QPoint o, QPoint p, double s)
+{
+    QPoint result;
+    result.setX((double)p.x()*s+(double)o.x()*(1.0-s));
+    result.setY((double)p.y()*s+(double)o.y()*(1.0-s));
+    return result;
+}
+
+void Polygon::scale(Polygon *s, double x)
+{
+    poly_point.push_back(s->getPoint()[0]);
+    for(int i = 0;i<s->getPoint().size();i++)
+        poly_point.push_back(scale_point(s->getPoint()[0],s->getPoint()[i],x));
+}
+
+void Polygon::paint_all(QPainter &painter)
+{
+    for(int i = 0;i<poly_point.size();i++)
+        paint(painter, i, (i+1)%poly_point.size());
+}
+

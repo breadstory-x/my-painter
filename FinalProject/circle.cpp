@@ -70,7 +70,7 @@ void Circle::paint(QPainter &painter)
 }
 
 
-void Circle::rotate_paint(QPainter &painter, int d)
+void Circle::rotate(Shape *s, int d)
 {
 
 }

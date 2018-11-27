@@ -22,8 +22,8 @@ void Rectangle::paint(QPainter &painter)
     }
 }
 
-void Rectangle::rotate_paint(QPainter &painter, int d)
+void Rectangle::rotate(Shape *s, int d)
 {
-    end = rotate_point(start, end, d);
-    paint(painter);
+
 }
+

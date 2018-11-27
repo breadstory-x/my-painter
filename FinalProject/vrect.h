@@ -8,7 +8,7 @@ class Vrect:public Shape
 public:
     Vrect();
     void paint(QPainter &painter);
-    void rotate_paint(QPainter &painter, int d);
+    void rotate(Shape *s, int d);
 };
 
 #endif // VRECT_H

@@ -26,6 +26,7 @@ class MyPainter : public QWidget
     Q_OBJECT
 public:
     explicit MyPainter(QWidget *parent = nullptr);
+    void paint_all_shape(QPainter &painter);
 
 public slots:
         void setCurrentMode(modeCode s)
@@ -163,13 +164,7 @@ public slots:
                 //此处将所有图形重新画一遍
                 pen.setColor(color);
                 painter.setPen(pen);
-                for(int i = 0;i<line.size();i++)
-                    line[i]->paint(painter);
-                for(int i = 0;i<c_e_r.size();i++)
-                    c_e_r[i]->paint(painter);
-                for(int i = 0;i<poly.size();i++)
-                    for(int j = 0;j <poly[i]->getPoint().size();j++)
-                        poly[i]->paint(painter,j,(j+1)%poly[i]->getPoint().size());
+                paint_all_shape(painter);
                 this->update();
             }
         }
@@ -181,24 +176,137 @@ public slots:
             pen.setWidth(width);
             pen.setColor(Qt::white);
             painter.setPen(pen);
-            c_e_r[0]->paint(painter);
-            this->update();
+            if(modecode == code_circle || modecode == code_ellipse || modecode == code_line || modecode == code_rect)
+            {
+                if(shape == NULL)
+                {
+                    QMessageBox::about(NULL,  u8"请先画图形！", u8"请先画图形！");
+                    return;
+                }
+                if(tran_shape != NULL)
+                {
+                    tran_shape->paint(painter);
+                    delete tran_shape;
+                }
+                else
+                    shape->paint(painter);
+                switch (modecode) {
+                case code_line:
+                    tran_shape = new Line;
+                    break;
+                case code_circle:
+                    tran_shape = new Circle;
+                    break;
+                case code_ellipse:
+                    tran_shape = new Ellipse;
+                    break;
+                case code_rect:
+                    tran_shape = new Rectangle;
+                    break;
+                }
+                tran_shape->rotate(shape,r);
+                pen.setColor(color);
+                painter.setPen(pen);
+                tran_shape->paint(painter);
 
-            /*QMatrix matrix;
-            matrix.translate(300, 300);//移动中心
-            matrix.rotate(r);
-            painter.setWorldMatrix(matrix);*/
+                //重画
+                paint_all_shape(painter);
+            }
+            else if(modecode == code_polygon)
+            {
+                if(polygon == NULL)
+                {
+                    QMessageBox::about(NULL,  u8"请先画图形！", u8"请先画图形！");
+                    return;
+                }
+                if(tran_polygon != NULL)
+                {
+                    tran_polygon->paint_all(painter);
+                    delete tran_polygon;
+                }
+                else
+                    polygon->paint_all(painter);
+                tran_polygon = new Polygon;
+                tran_polygon->rotate(polygon,r);
+                pen.setColor(color);
+                painter.setPen(pen);
+                tran_polygon->paint_all(painter);
 
-            pen.setColor(color);
-            painter.setPen(pen);
-            c_e_r[0]->rotate_paint(painter,r-last_rotate_angle);
+                //重画
+                paint_all_shape(painter);
+            }
+
             this->update();
-            last_rotate_angle = r;
         }
 
         void scale(qreal s)
         {
+            QPainter painter(pix);
+            QPen pen;
+            pen.setWidth(width);
+            pen.setColor(Qt::white);
+            painter.setPen(pen);
+            if(modecode == code_circle || modecode == code_ellipse || modecode == code_line || modecode == code_rect)
+            {
+                if(shape == NULL)
+                {
+                    QMessageBox::about(NULL,  u8"请先画图形！", u8"请先画图形！");
+                    return;
+                }
+                if(tran_shape != NULL)
+                {
+                    tran_shape->paint(painter);
+                    delete tran_shape;
+                }
+                else
+                {
+                    shape->paint(painter);
+                }
+                switch (modecode) {
+                case code_line:
+                    tran_shape = new Line;
+                    break;
+                case code_circle:
+                    tran_shape = new Circle;
+                    break;
+                case code_ellipse:
+                    tran_shape = new Ellipse;
+                    break;
+                case code_rect:
+                    tran_shape = new Rectangle;
+                    break;
+                }
+                tran_shape->scale(shape,s);
+                pen.setColor(color);
+                painter.setPen(pen);
+                tran_shape->paint(painter);
+                //重画
+                paint_all_shape(painter);
+            }
+            else if(modecode == code_polygon)
+            {
+                if(polygon == NULL)
+                {
+                    QMessageBox::about(NULL,  u8"请先画图形！", u8"请先画图形！");
+                    return;
+                }
+                if(tran_polygon != NULL)
+                {
+                    tran_polygon->paint_all(painter);
+                    delete tran_polygon;
+                }
+                else
+                    polygon->paint_all(painter);
+                tran_polygon = new Polygon;
+                tran_polygon->scale(polygon,s);
+                pen.setColor(color);
+                painter.setPen(pen);
+                tran_polygon->paint_all(painter);
 
+                //重画
+                paint_all_shape(painter);
+            }
+            this->update();
         }
 private:
     QPixmap *pix;//画布
@@ -211,13 +319,14 @@ private:
     int poly_edit_num;//当前编辑的是多边形的第几个点
     Shape *shape;//图形对象，用于调用派生类的绘图函数
     Polygon *polygon;//多边形对象
+    Shape *tran_shape;//变换后的临时对象
+    Polygon *tran_polygon;//变换后的临时多边形对象
     std::vector<Shape*>line;//已画完的直线，用于裁剪和变换
     std::vector<Shape*>c_e_r;//已画完的圆、椭圆、矩形，用于变换
     std::vector<Polygon*>poly;//已画完的多边形，用于变换
     int modecode;//当前选择的形状
     int width;//当前选择的画笔宽度
     QColor color;//当前选择的颜色
-    int last_rotate_angle;
 
 protected:
    void paintEvent(QPaintEvent* e);

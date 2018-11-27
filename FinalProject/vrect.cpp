@@ -44,7 +44,7 @@ void Vrect::paint(QPainter &painter)
     }
 }
 
-void Vrect::rotate_paint(QPainter &painter, int d)
+void Vrect::rotate(Shape *s, int d)
 {
 
 }

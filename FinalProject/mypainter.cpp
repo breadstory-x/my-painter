@@ -6,6 +6,7 @@
 #include<QStack>
 #include<QCursor>
 
+
 MyPainter::MyPainter(QWidget *parent) : QWidget(parent)
 {
      setAutoFillBackground(true);    //自动设定背景颜色
@@ -24,12 +25,13 @@ MyPainter::MyPainter(QWidget *parent) : QWidget(parent)
      poly_edit_num = 0;
 
      shape = NULL;
-     polygon = new Polygon;
-     //vrect = new Vrect;
+     polygon = NULL;
+     tran_shape = NULL;
+     tran_polygon = NULL;
      modecode = code_line;
      width = 3;
      color = Qt::black;
-    last_rotate_angle = 0;
+
      setMouseTracking(true);
 }
 
@@ -39,61 +41,72 @@ void MyPainter::mousePressEvent(QMouseEvent *e)
   //记录第一次点击的鼠标的起始坐标
 
     LBDown = true;
-    if(shape != NULL)//判断是否为编辑模式
+    if(tran_shape != NULL)//将变换过的图形保存并清空
     {
-        if(modecode == code_circle || modecode == code_ellipse || modecode == code_line || modecode == code_rect || modecode == code_select)
+        shape = tran_shape;
+        tran_shape = NULL;
+    }
+    else if(tran_polygon != NULL)
+    {
+        polygon = tran_polygon;
+        tran_polygon = NULL;
+    }
+
+
+    //判断是否为编辑模式
+    if(shape != NULL && (modecode == code_circle || modecode == code_ellipse || modecode == code_line || modecode == code_rect || modecode == code_select))
+    {
+        if(   (shape->getStart().rx()-10<e->pos().rx() && e->pos().rx()<shape->getStart().rx()+10)
+              &&(shape->getStart().ry()-10<e->pos().ry() && e->pos().ry()<shape->getStart().ry()+10))
         {
-            if(   (shape->getStart().rx()-10<e->pos().rx() && e->pos().rx()<shape->getStart().rx()+10)
-                &&(shape->getStart().ry()-10<e->pos().ry() && e->pos().ry()<shape->getStart().ry()+10))
+            isEdit = true;
+            isStart = true;
+        }
+        else if(  (shape->getEnd().rx()-10<e->pos().rx() && e->pos().rx()<shape->getEnd().rx()+10)
+                  &&(shape->getEnd().ry()-10<e->pos().ry() && e->pos().ry()<shape->getEnd().ry()+10))
+        {
+            isEdit = true;
+            isStart = false;
+        }
+        if(isEdit == true)
+        {
+            //先将要编辑的图像清空
+            QPainter painter(pix);
+            QPen pen;
+            pen.setWidth(width);
+            pen.setColor(Qt::white);
+            painter.setPen(pen);
+            shape->paint(painter);
+            this->update();
+            isDrawing = true;
+            return;
+        }
+    }
+    else if(polygon != NULL && modecode == code_polygon)
+    {
+        for(int i = 0;i < polygon->getPoint().size();i++)
+        {
+            if(poly_finish == true
+                    &&(polygon->getPoint()[i].rx()-10<e->pos().rx() && e->pos().rx()<polygon->getPoint()[i].rx()+10)
+                    &&(polygon->getPoint()[i].ry()-10<e->pos().ry() && e->pos().ry()<polygon->getPoint()[i].ry()+10))
             {
                 isEdit = true;
-                isStart = true;
-            }
-            else if(  (shape->getEnd().rx()-10<e->pos().rx() && e->pos().rx()<shape->getEnd().rx()+10)
-                    &&(shape->getEnd().ry()-10<e->pos().ry() && e->pos().ry()<shape->getEnd().ry()+10))
-             {
-                isEdit = true;
-                isStart = false;
-            }
-            if(isEdit == true)
-            {
-                //先将要编辑的图像清空
+                poly_edit_num = i;
+
                 QPainter painter(pix);
                 QPen pen;
                 pen.setWidth(width);
                 pen.setColor(Qt::white);
                 painter.setPen(pen);
-                shape->paint(painter);
+                polygon->paint(painter, poly_edit_num, (poly_edit_num-1+polygon->getPoint().size())%polygon->getPoint().size());
+                polygon->paint(painter, poly_edit_num, (poly_edit_num+1)%polygon->getPoint().size());
                 this->update();
-                isDrawing = true;
+                isDrawing=true;
                 return;
             }
         }
-        else if(modecode == code_polygon)
-        {
-            for(int i = 0;i < polygon->getPoint().size();i++)
-            {
-                if(poly_finish == true
-                 &&(polygon->getPoint()[i].rx()-10<e->pos().rx() && e->pos().rx()<polygon->getPoint()[i].rx()+10)
-                 &&(polygon->getPoint()[i].ry()-10<e->pos().ry() && e->pos().ry()<polygon->getPoint()[i].ry()+10))
-                {
-                    isEdit = true;
-                    poly_edit_num = i;
-
-                    QPainter painter(pix);
-                    QPen pen;
-                    pen.setWidth(width);
-                    pen.setColor(Qt::white);
-                    painter.setPen(pen);
-                    polygon->paint(painter, poly_edit_num, (poly_edit_num-1+polygon->getPoint().size())%polygon->getPoint().size());
-                    polygon->paint(painter, poly_edit_num, (poly_edit_num+1)%polygon->getPoint().size());
-                    this->update();
-                    isDrawing=true;
-                    return;
-                }
-            }
-        }
     }
+
 
     //如果有裁剪框，则清空裁剪框
     Vrect *q=dynamic_cast<Vrect *>(shape);
@@ -106,6 +119,27 @@ void MyPainter::mousePressEvent(QMouseEvent *e)
         painter.setPen(pen);
         shape->paint(painter);
         shape = NULL;
+        pen.setColor(color);
+        painter.setPen(pen);
+        paint_all_shape(painter);
+    }
+
+    if(shape != NULL)//将上次画完的图形保存
+    {
+        Line *l=dynamic_cast<Line *>(shape);
+        if(l != NULL) line.push_back(l);
+        Circle *c = dynamic_cast<Circle*>(shape);
+        if(c != NULL) c_e_r.push_back(c);
+        Ellipse *e = dynamic_cast<Ellipse*>(shape);
+        if(e != NULL) c_e_r.push_back(e);
+        Rectangle *r = dynamic_cast<Rectangle*>(shape);
+        if(r != NULL) c_e_r.push_back(r);
+        shape = NULL;
+    }
+    if(poly_finish == true && polygon != NULL)
+    {
+        poly.push_back(polygon);
+        polygon = NULL;
     }
 
     switch (modecode) {
@@ -129,49 +163,50 @@ void MyPainter::mousePressEvent(QMouseEvent *e)
         break;
     }
     if(modecode == code_polygon)
+    {      
+        if(poly_finish == true)
         {
-            if(poly_finish == true)
+            polygon = new Polygon;
+            polygon->getPoint().clear();
+            polygon->seti(0);
+            poly_finish = false;
+            //poly_edit_num = 0;
+        }
+        QPainter painter(pix);
+        QPen pen;
+        pen.setWidth(width);
+        pen.setColor(color);
+        painter.setPen(pen);
+        if(e->button() == Qt::LeftButton)
+        {
+            //qDebug()<<polygon->getPoint().size();
+            if(polygon->getPoint().size() == 0)
             {
-                polygon->getPoint().clear();
-                polygon->seti(0);
-                poly_finish = false;
-                //poly_edit_num = 0;
+                polygon->getPoint().push_back(e->pos());
+                painter.drawPoint(e->pos());
+                this->update();
             }
-            QPainter painter(pix);
-            QPen pen;
-            pen.setWidth(width);
-            pen.setColor(color);
-            painter.setPen(pen);
-            if(e->button() == Qt::LeftButton)
+            else if(polygon->getPoint().size() != 0)
             {
-                //qDebug()<<polygon->getPoint().size();
-                if(polygon->getPoint().size() == 0)
-                {
-                    polygon->getPoint().push_back(e->pos());
-                    painter.drawPoint(e->pos());
-                    this->update();
-                }
-                else if(polygon->getPoint().size() != 0)
-                {
-                    polygon->getPoint().push_back(e->pos());
-                    polygon->addi();
-                    polygon->paint(painter, polygon->geti()-1, polygon->geti());
-                    this->update();
-                }
-            }
-            else if(e->button() == Qt::RightButton)
-            {
-                if(polygon->getPoint().size() != 0)
-                {
-                    polygon->paint(painter, polygon->getPoint().size()-1, 0);
-                    poly.push_back(polygon);
-                    this->update();
-                    poly_finish = true;
-                }
+                polygon->getPoint().push_back(e->pos());
+                polygon->addi();
+                polygon->paint(painter, polygon->geti()-1, polygon->geti());
+                this->update();
             }
         }
-    else if(modecode == code_fill)
+        else if(e->button() == Qt::RightButton)
         {
+            if(polygon->getPoint().size() != 0)
+            {
+                polygon->paint(painter, polygon->getPoint().size()-1, 0);
+                //poly.push_back(polygon);
+                this->update();
+                poly_finish = true;
+            }
+        }
+    }
+    else if(modecode == code_fill)
+    {
             QImage image = pix->toImage();
             QColor cur_color= image.pixelColor(e->pos());
             if(cur_color == color)
@@ -232,15 +267,11 @@ void MyPainter::mousePressEvent(QMouseEvent *e)
             }
             pix = new QPixmap(QPixmap::fromImage(image));
             this->update();
-        }
+    }
     else if(modecode == code_circle || modecode == code_ellipse || modecode == code_line || modecode == code_rect || modecode == code_select)
     {
         shape->setStart(e->pos());
         isDrawing = true;
-    }
-    else if(modecode == code_transform)
-    {
-        //遍历判断是否选中
     }
 }
 
@@ -258,7 +289,10 @@ void MyPainter::mouseMoveEvent(QMouseEvent *e)
                     shape->setStart(e->pos());
                 else if(!isStart)
                     shape->setEnd(e->pos());
+
+
                 this->update();
+
             }
             else if(modecode == code_polygon)
             {
@@ -285,7 +319,7 @@ void MyPainter::mouseMoveEvent(QMouseEvent *e)
             setCursor(Qt::SizeAllCursor);
         else
             setCursor(Qt::ArrowCursor);
-    else if(modecode == code_polygon)
+    else if(polygon != NULL && modecode == code_polygon)
         for(int i = 0;i < polygon->getPoint().size();i++)
             if(poly_finish == true
              &&(polygon->getPoint()[i].rx()-10<e->pos().rx() && e->pos().rx()<polygon->getPoint()[i].rx()+10)
@@ -296,10 +330,7 @@ void MyPainter::mouseMoveEvent(QMouseEvent *e)
             }
             else
                 setCursor(Qt::ArrowCursor);
-    /*else
-    {
-        qDebug()<<e->pos();
-    }*/
+
 
 }
 
@@ -332,7 +363,10 @@ void MyPainter::mouseReleaseEvent(QMouseEvent *e)
             painterx.setPen(pen);
             shape->paint(painterx);
 
-            Line *l=dynamic_cast<Line *>(shape);
+            pen.setColor(color);
+            painterx.setPen(pen);
+            paint_all_shape(painterx);
+            /*Line *l=dynamic_cast<Line *>(shape);
             if(l != NULL)
             {
                 line.pop_back();
@@ -345,7 +379,13 @@ void MyPainter::mouseReleaseEvent(QMouseEvent *e)
             {
                 c_e_r.pop_back();
                 c_e_r.push_back(r);
-            }
+            }*/
+            /*pen.setWidth(1);
+            pen.setColor(Qt::blue);
+            painterx.setPen(pen);
+            painterx.drawRect(shape->getStart().x()-5,shape->getStart().y()-5,10,10);
+            painterx.drawRect(shape->getEnd().x()-5,shape->getEnd().y()-5,10,10);*/
+
             this->update();
         }
         else if(modecode == code_polygon)
@@ -360,10 +400,7 @@ void MyPainter::mouseReleaseEvent(QMouseEvent *e)
             painterx.setPen(pen);
             polygon->paint(painterx, poly_edit_num, (poly_edit_num-1+polygon->getPoint().size())%polygon->getPoint().size());
             polygon->paint(painterx, poly_edit_num, (poly_edit_num+1)%polygon->getPoint().size());
-
-            poly.pop_back();
-            poly.push_back(polygon);
-
+            paint_all_shape(painterx);
             this->update();
         }
 
@@ -389,16 +426,6 @@ void MyPainter::mouseReleaseEvent(QMouseEvent *e)
             painterx.setPen(pen);
             shape->paint(painterx);
 
-            //painterx.drawRect(shape->getStart().x()-5,shape->getStart().y()-5,10,10);
-            //painterx.drawRect(shape->getEnd().x()-5,shape->getEnd().y()-5,10,10);
-            Line *l=dynamic_cast<Line *>(shape);
-            if(l != NULL) line.push_back(l);
-            Circle *c = dynamic_cast<Circle*>(shape);
-            if(c != NULL) c_e_r.push_back(c);
-            Ellipse *e = dynamic_cast<Ellipse*>(shape);
-            if(e != NULL) c_e_r.push_back(e);
-            Rectangle *r = dynamic_cast<Rectangle*>(shape);
-            if(r != NULL) c_e_r.push_back(r);
             this->update();
         }
     }
@@ -432,11 +459,23 @@ void MyPainter::paintEvent(QPaintEvent *)
             polygon->paint(painterx, poly_edit_num, (poly_edit_num-1+polygon->getPoint().size())%polygon->getPoint().size());
             polygon->paint(painterx, poly_edit_num, (poly_edit_num+1)%polygon->getPoint().size());
         }
+        paint_all_shape(painterx);
 
         painter.drawPixmap(QPoint(0, 0), *temppix);
     }
     else
     {
-        painter.drawPixmap(QPoint(0, 0), *pix);
+       painter.drawPixmap(QPoint(0, 0), *pix);
     }
+}
+
+void MyPainter::paint_all_shape(QPainter &painter)
+{
+    for(int i = 0;i<line.size();i++)
+        line[i]->paint(painter);
+    for(int i = 0;i<c_e_r.size();i++)
+        c_e_r[i]->paint(painter);
+    for(int i = 0;i<poly.size();i++)
+        for(int j = 0;j <poly[i]->getPoint().size();j++)
+            poly[i]->paint(painter,j,(j+1)%poly[i]->getPoint().size());
 }

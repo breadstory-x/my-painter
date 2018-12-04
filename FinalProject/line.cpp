@@ -222,9 +222,21 @@ void Line::paint(QPainter &painter)
     }
 */
 }
-
+/*
 void Line::rotate(Shape *s, int d)
 {
     start = s->getStart();
     end = rotate_point(s->getStart(),s->getEnd(),d);
+}*/
+
+void Line::rotate_paint(QPainter &painter)
+{
+    painter.translate(start.x(),start.y());
+    painter.rotate(angle);
+    painter.translate(-start.x(),-start.y());
+    paint(painter);
+    //画完了还原坐标系
+    painter.translate(start.x(),start.y());
+    painter.rotate(-angle);
+    painter.translate(-start.x(),-start.y());
 }

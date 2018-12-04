@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>681</width>
-    <height>470</height>
+    <width>931</width>
+    <height>609</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>681</width>
+     <width>931</width>
      <height>23</height>
     </rect>
    </property>
@@ -89,6 +89,8 @@
    <addaction name="separator"/>
    <addaction name="actionSelect"/>
    <addaction name="actionCut"/>
+   <addaction name="separator"/>
+   <addaction name="action_help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLine">
@@ -99,8 +101,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/直线.bmp</normaloff>../图标/直线.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/直线.bmp</normaloff>:/icons/直线.bmp</iconset>
    </property>
    <property name="text">
     <string>直线</string>
@@ -129,8 +131,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/椭圆.bmp</normaloff>../图标/椭圆.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/椭圆.bmp</normaloff>:/icons/椭圆.bmp</iconset>
    </property>
    <property name="text">
     <string>椭圆</string>
@@ -153,8 +155,8 @@
   </action>
   <action name="action_O">
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/打开.bmp</normaloff>../图标/打开.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/打开.bmp</normaloff>:/icons/打开.bmp</iconset>
    </property>
    <property name="text">
     <string>打开</string>
@@ -173,8 +175,8 @@
   </action>
   <action name="action_S">
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/保存.bmp</normaloff>../图标/保存.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/保存.bmp</normaloff>:/icons/保存.bmp</iconset>
    </property>
    <property name="text">
     <string>保存</string>
@@ -196,8 +198,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/圆.bmp</normaloff>../图标/圆.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/圆.bmp</normaloff>:/icons/圆.bmp</iconset>
    </property>
    <property name="text">
     <string>圆</string>
@@ -252,8 +254,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/多边形.bmp</normaloff>../图标/多边形.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/多边形.bmp</normaloff>:/icons/多边形.bmp</iconset>
    </property>
    <property name="text">
     <string>多边形</string>
@@ -275,8 +277,8 @@
   </action>
   <action name="actionColor">
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/颜色.bmp</normaloff>../图标/颜色.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/颜色.bmp</normaloff>:/icons/颜色.bmp</iconset>
    </property>
    <property name="text">
     <string>颜色设置</string>
@@ -298,8 +300,8 @@
   </action>
   <action name="actionOpen">
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/打开.bmp</normaloff>../图标/打开.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/打开.bmp</normaloff>:/icons/打开.bmp</iconset>
    </property>
    <property name="text">
     <string>打开</string>
@@ -318,8 +320,8 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/保存.bmp</normaloff>../图标/保存.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/保存.bmp</normaloff>:/icons/保存.bmp</iconset>
    </property>
    <property name="text">
     <string>保存</string>
@@ -344,8 +346,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/颜料桶.bmp</normaloff>../图标/颜料桶.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/颜料桶.bmp</normaloff>:/icons/颜料桶.bmp</iconset>
    </property>
    <property name="text">
     <string>填充</string>
@@ -370,8 +372,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/矩形.bmp</normaloff>../图标/矩形.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/矩形.bmp</normaloff>:/icons/矩形.bmp</iconset>
    </property>
    <property name="text">
     <string>矩形</string>
@@ -393,11 +395,14 @@
   </action>
   <action name="actionNew">
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/新建.bmp</normaloff>../图标/新建.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/新建.bmp</normaloff>:/icons/新建.bmp</iconset>
    </property>
    <property name="text">
-    <string>新建</string>
+    <string>清空</string>
+   </property>
+   <property name="toolTip">
+    <string>清空当前画布</string>
    </property>
    <property name="statusTip">
     <string>新建一个文件</string>
@@ -413,8 +418,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/裁剪.bmp</normaloff>../图标/裁剪.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/裁剪.bmp</normaloff>:/icons/裁剪.bmp</iconset>
    </property>
    <property name="text">
     <string>裁剪</string>
@@ -436,8 +441,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/√.bmp</normaloff>../图标/√.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/√.bmp</normaloff>:/icons/√.bmp</iconset>
    </property>
    <property name="text">
     <string>变换</string>
@@ -464,8 +469,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../图标/矩形选择框.bmp</normaloff>../图标/矩形选择框.bmp</iconset>
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/矩形选择框.bmp</normaloff>:/icons/矩形选择框.bmp</iconset>
    </property>
    <property name="text">
     <string>选择框</string>
@@ -482,8 +487,22 @@
     <string>选择</string>
    </property>
   </action>
+  <action name="action_help">
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/提示.bmp</normaloff>:/icons/提示.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>帮助</string>
+   </property>
+   <property name="toolTip">
+    <string>帮助</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icon.qrc"/>
+ </resources>
  <connections/>
 </ui>

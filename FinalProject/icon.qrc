@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../icons/×.bmp</file>
+        <file>../icons/√.bmp</file>
+        <file>../icons/保存.bmp</file>
+        <file>../icons/裁剪.bmp</file>
+        <file>../icons/打开.bmp</file>
+        <file>../icons/多边形.bmp</file>
+        <file>../icons/矩形.bmp</file>
+        <file>../icons/矩形选择框.bmp</file>
+        <file>../icons/铅笔.bmp</file>
+        <file>../icons/曲线.bmp</file>
+        <file>../icons/提示.bmp</file>
+        <file>../icons/退出.bmp</file>
+        <file>../icons/椭圆.bmp</file>
+        <file>../icons/橡皮.bmp</file>
+        <file>../icons/新建.bmp</file>
+        <file>../icons/颜料桶.bmp</file>
+        <file>../icons/颜色.bmp</file>
+        <file>../icons/圆.bmp</file>
+        <file>../icons/直线.bmp</file>
+    </qresource>
+</RCC>

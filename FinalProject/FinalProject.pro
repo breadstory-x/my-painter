@@ -33,7 +33,8 @@ SOURCES += \
     ellipse.cpp \
     polygon.cpp \
     rectangle.cpp \
-    vrect.cpp
+    vrect.cpp \
+    helpdialog.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +45,33 @@ HEADERS += \
     ellipse.h \
     polygon.h \
     rectangle.h \
-    vrect.h
+    vrect.h \
+    helpdialog.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    helpdialog.ui
+
+RESOURCES += \
+    icon.qrc
+
+DISTFILES += \
+    ../icons/×.bmp \
+    ../icons/√.bmp \
+    ../icons/保存.bmp \
+    ../icons/裁剪.bmp \
+    ../icons/打开.bmp \
+    ../icons/多边形.bmp \
+    ../icons/矩形.bmp \
+    ../icons/矩形选择框.bmp \
+    ../icons/铅笔.bmp \
+    ../icons/曲线.bmp \
+    ../icons/提示.bmp \
+    ../icons/退出.bmp \
+    ../icons/椭圆.bmp \
+    ../icons/橡皮.bmp \
+    ../icons/新建.bmp \
+    ../icons/颜料桶.bmp \
+    ../icons/颜色.bmp \
+    ../icons/圆.bmp \
+    ../icons/直线.bmp

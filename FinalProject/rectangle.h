@@ -8,7 +8,7 @@ class Rectangle : public Shape
 public:
     Rectangle();
     void paint(QPainter &painter);
-    void rotate(Shape *s, int d);
+    void rotate_paint(QPainter &painter);
 };
 
 #endif // RECTANGLE_H

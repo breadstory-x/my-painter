@@ -6,6 +6,7 @@
 #include<QComboBox>
 #include<QColor>
 #include "mypainter.h"
+#include "helpdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -47,6 +48,7 @@ public slots:
     void NewButtonClicked();
     void SelectButtonClicked();
     void cutButtonClicked();
+    void helpButtonClicked();
 
     void changeRotation(int r);
     void changeScale(int s);
@@ -54,6 +56,9 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+
+    HelpDialog *helpDialog;
+
 };
 
 #endif // MAINWINDOW_H

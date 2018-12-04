@@ -46,9 +46,9 @@ public slots:
             //qDebug()<<s;
             QImage image = pix->toImage();
             image.save(s,"JPG");
-            QMessageBox::about(NULL,  u8"保存成功！", u8"保存成功！");
+            QMessageBox::information(NULL,  u8"保存成功！", u8"保存成功！");
         }
-        void NewFile()//TODD:一定要记得修改啊！！！
+        void NewFile()
         {
             setAutoFillBackground(true);    //自动设定背景颜色
             pix=new QPixmap(WIDTH,HEIGHT);    //这个pixmap对象用来接受准备绘制到空间的内容
@@ -63,24 +63,25 @@ public slots:
             poly_edit_num = 0;
 
             shape = NULL;
-            polygon = new Polygon;
+            polygon = NULL;
+            tran_shape = NULL;
+            tran_polygon = NULL;
+            //modecode = code_line;
+            width = 3;
+            color = Qt::black;
             line.clear();
             c_e_r.clear();
             poly.clear();
-            modecode = code_line;
-            width = 3;
-            color = Qt::black;
             this->update();
             setMouseTracking(true);
         }
-
         void doCutPicture()
         {
             Vrect *q=dynamic_cast<Vrect *>(shape);
             if (q == NULL)
-                QMessageBox::about(NULL,  u8"Error!", u8"请指定裁剪范围！");
+                QMessageBox::information(NULL,  u8"Error!", u8"请指定裁剪范围！");
             else if(line.size() == 0)
-                QMessageBox::about(NULL,  u8"Error!", u8"请先画直线，再进行裁剪！");
+                QMessageBox::information(NULL,  u8"Error!", u8"请先画直线，再进行裁剪！");
             else
             {
                 std::vector<int> will_del;//存储将要被删除的直线编号
@@ -168,7 +169,6 @@ public slots:
                 this->update();
             }
         }
-
         void rotate(int r)
         {
             QPainter painter(pix);
@@ -180,16 +180,16 @@ public slots:
             {
                 if(shape == NULL)
                 {
-                    QMessageBox::about(NULL,  u8"请先画图形！", u8"请先画图形！");
+                    QMessageBox::information(NULL,  u8"请先画图形！", u8"请先画图形！");
                     return;
                 }
                 if(tran_shape != NULL)
                 {
-                    tran_shape->paint(painter);
+                    tran_shape->rotate_paint(painter);
                     delete tran_shape;
                 }
                 else
-                    shape->paint(painter);
+                    shape->rotate_paint(painter);
                 switch (modecode) {
                 case code_line:
                     tran_shape = new Line;
@@ -204,10 +204,13 @@ public slots:
                     tran_shape = new Rectangle;
                     break;
                 }
-                tran_shape->rotate(shape,r);
+                tran_shape->setStart(shape->getStart());
+                tran_shape->setEnd(shape->getEnd());
+                tran_shape->setAngle(r);
                 pen.setColor(color);
                 painter.setPen(pen);
-                tran_shape->paint(painter);
+
+                tran_shape->rotate_paint(painter);
 
                 //重画
                 paint_all_shape(painter);
@@ -216,7 +219,7 @@ public slots:
             {
                 if(polygon == NULL)
                 {
-                    QMessageBox::about(NULL,  u8"请先画图形！", u8"请先画图形！");
+                    QMessageBox::information(NULL,  u8"请先画图形！", u8"请先画图形！");
                     return;
                 }
                 if(tran_polygon != NULL)
@@ -238,7 +241,6 @@ public slots:
 
             this->update();
         }
-
         void scale(qreal s)
         {
             QPainter painter(pix);
@@ -250,17 +252,17 @@ public slots:
             {
                 if(shape == NULL)
                 {
-                    QMessageBox::about(NULL,  u8"请先画图形！", u8"请先画图形！");
+                    QMessageBox::information(NULL,  u8"请先画图形！", u8"请先画图形！");
                     return;
                 }
                 if(tran_shape != NULL)
                 {
-                    tran_shape->paint(painter);
+                    tran_shape->rotate_paint(painter);
                     delete tran_shape;
                 }
                 else
                 {
-                    shape->paint(painter);
+                    shape->rotate_paint(painter);
                 }
                 switch (modecode) {
                 case code_line:
@@ -279,7 +281,7 @@ public slots:
                 tran_shape->scale(shape,s);
                 pen.setColor(color);
                 painter.setPen(pen);
-                tran_shape->paint(painter);
+                tran_shape->rotate_paint(painter);
                 //重画
                 paint_all_shape(painter);
             }
@@ -287,7 +289,7 @@ public slots:
             {
                 if(polygon == NULL)
                 {
-                    QMessageBox::about(NULL,  u8"请先画图形！", u8"请先画图形！");
+                    QMessageBox::information(NULL,  u8"请先画图形！", u8"请先画图形！");
                     return;
                 }
                 if(tran_polygon != NULL)

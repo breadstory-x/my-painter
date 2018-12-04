@@ -22,8 +22,15 @@ void Rectangle::paint(QPainter &painter)
     }
 }
 
-void Rectangle::rotate(Shape *s, int d)
+void Rectangle::rotate_paint(QPainter &painter)
 {
-
+    painter.translate(start.x(),start.y());
+    painter.rotate(angle);
+    painter.translate(-start.x(),-start.y());
+    paint(painter);
+    //画完了还原坐标系
+    painter.translate(start.x(),start.y());
+    painter.rotate(-angle);
+    painter.translate(-start.x(),-start.y());
 }
 

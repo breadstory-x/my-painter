@@ -9,6 +9,7 @@
 #include<QSplitter>
 #include<QPushButton>
 #include<QSpinBox>
+#include<QLabel>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,10 +43,14 @@ MainWindow::MainWindow(QWidget *parent) :
     scaleSlider->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     //scaleSlider->setEnabled(false);
 
+    QLabel *help = new QLabel(mainGroup);
+    help->setText(u8"帮助：\n1.直线、多边形的控制点在\n顶点处\n2.圆、椭圆、矩形、裁剪窗口\n的控制点在左上角和右下角");
+
     //右侧窗口布局
     QVBoxLayout *addWidgetLayout = new QVBoxLayout();//垂直布局
     addWidgetLayout->addWidget(mainGroup);
-    addWidgetLayout->addStretch(1);//分隔
+    //addWidgetLayout->addStretch(1);//分隔
+    addWidgetLayout->addWidget(help);
 
     QVBoxLayout *rotateGroupLayout = new QVBoxLayout(rotateGroup);
     rotateGroupLayout->addWidget(rotateSlider);
@@ -57,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QVBoxLayout *mainGroupLayout = new QVBoxLayout(mainGroup);
     mainGroupLayout->addWidget(rotateGroup);
     mainGroupLayout->addWidget(scaleGroup);
+
 
 
 
@@ -104,6 +110,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionCut, SIGNAL(triggered()), this, SLOT(cutButtonClicked()));
     connect(this, SIGNAL(cutPicture()), paintWidget, SLOT(doCutPicture()));
 
+    connect(ui->action_help, SIGNAL(triggered()), this, SLOT(helpButtonClicked()));
     //菜单栏
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(NewButtonClicked()));
     connect(this, SIGNAL(newPixmap()), paintWidget, SLOT(NewFile()));
@@ -289,6 +296,13 @@ void MainWindow::cutButtonClicked()
     emit cutPicture();
 }
 
+void MainWindow::helpButtonClicked()
+{
+    helpDialog = new HelpDialog(this);
+    helpDialog->setModal(false);
+    helpDialog->show();
+}
+
 void MainWindow::ColorButtonClicked()
 {
     QColor color = QColorDialog::getColor(Qt::black);
@@ -302,7 +316,7 @@ void MainWindow::NewButtonClicked()
 
 void MainWindow::OpenButtonClicked()
 {
-    QMessageBox::about(NULL, "About", u8"功能尚未实现");
+    QMessageBox::information(NULL, "information", u8"功能尚未实现");
 }
 
 void MainWindow::SaveButtonClicked()

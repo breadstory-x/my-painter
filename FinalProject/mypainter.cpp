@@ -54,7 +54,7 @@ void MyPainter::mousePressEvent(QMouseEvent *e)
 
 
     //判断是否为编辑模式
-    if(shape != NULL && (modecode == code_circle || modecode == code_ellipse || modecode == code_line || modecode == code_rect || modecode == code_select))
+    if(shape != NULL && shape->getAngle() == 0 && (modecode == code_circle || modecode == code_ellipse || modecode == code_line || modecode == code_rect || modecode == code_select))
     {
         if(   (shape->getStart().rx()-10<e->pos().rx() && e->pos().rx()<shape->getStart().rx()+10)
               &&(shape->getStart().ry()-10<e->pos().ry() && e->pos().ry()<shape->getStart().ry()+10))
@@ -310,7 +310,7 @@ void MyPainter::mouseMoveEvent(QMouseEvent *e)
         }
     }
     if(modecode == code_circle || modecode == code_ellipse || modecode == code_line || modecode == code_rect || modecode == code_select)
-        if( shape != NULL &&
+        if( shape != NULL && shape->getAngle() == 0 &&
             (( (shape->getStart().rx()-10<e->pos().rx() && e->pos().rx()<shape->getStart().rx()+10)
             &&(shape->getStart().ry()-10<e->pos().ry() && e->pos().ry()<shape->getStart().ry()+10))
             ||
@@ -348,6 +348,9 @@ void MyPainter::mouseReleaseEvent(QMouseEvent *e)
             else if(!isStart)
                 shape->setEnd(e->pos());
 
+
+
+            //pix->fill(Qt::white);//清空当前画布，准备重新画
             QPainter painterx(pix);
             QPen pen;
             if(modecode == code_select)
@@ -383,8 +386,9 @@ void MyPainter::mouseReleaseEvent(QMouseEvent *e)
             /*pen.setWidth(1);
             pen.setColor(Qt::blue);
             painterx.setPen(pen);
-            painterx.drawRect(shape->getStart().x()-5,shape->getStart().y()-5,10,10);
-            painterx.drawRect(shape->getEnd().x()-5,shape->getEnd().y()-5,10,10);*/
+            painterx.setBrush(Qt::white);
+            painterx.drawEllipse(shape->getStart().x()-5,shape->getStart().y()-5,10,10);
+            painterx.drawEllipse(shape->getEnd().x()-5,shape->getEnd().y()-5,10,10);*/
 
             this->update();
         }
@@ -409,6 +413,8 @@ void MyPainter::mouseReleaseEvent(QMouseEvent *e)
     {
         if(modecode == code_circle || modecode == code_ellipse || modecode == code_line || modecode == code_rect || modecode == code_select)
         {
+            //pix->fill(Qt::white);//清空当前画布，准备重新画
+
             isDrawing = false;
             shape->setEnd(e->pos());
             QPainter painterx(pix);
@@ -425,6 +431,14 @@ void MyPainter::mouseReleaseEvent(QMouseEvent *e)
             }
             painterx.setPen(pen);
             shape->paint(painterx);
+            paint_all_shape(painterx);
+
+            /*pen.setWidth(1);
+            pen.setColor(Qt::blue);
+            painterx.setPen(pen);
+            painterx.setBrush(Qt::white);
+            painterx.drawEllipse(shape->getStart().x()-5,shape->getStart().y()-5,10,10);
+            painterx.drawEllipse(shape->getEnd().x()-5,shape->getEnd().y()-5,10,10);*/
 
             this->update();
         }
@@ -472,9 +486,9 @@ void MyPainter::paintEvent(QPaintEvent *)
 void MyPainter::paint_all_shape(QPainter &painter)
 {
     for(int i = 0;i<line.size();i++)
-        line[i]->paint(painter);
+        line[i]->rotate_paint(painter);
     for(int i = 0;i<c_e_r.size();i++)
-        c_e_r[i]->paint(painter);
+        c_e_r[i]->rotate_paint(painter);
     for(int i = 0;i<poly.size();i++)
         for(int j = 0;j <poly[i]->getPoint().size();j++)
             poly[i]->paint(painter,j,(j+1)%poly[i]->getPoint().size());

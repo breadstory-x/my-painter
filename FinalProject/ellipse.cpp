@@ -89,7 +89,14 @@ void Ellipse::paint(QPainter &painter)
 
 }
 
-void Ellipse::rotate(Shape *s, int d)
+void Ellipse::rotate_paint(QPainter &painter)
 {
-
+    painter.translate(start.x(),start.y());
+    painter.rotate(angle);
+    painter.translate(-start.x(),-start.y());
+    paint(painter);
+    //画完了还原坐标系
+    painter.translate(start.x(),start.y());
+    painter.rotate(-angle);
+    painter.translate(-start.x(),-start.y());
 }

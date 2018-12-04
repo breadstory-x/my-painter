@@ -2,17 +2,17 @@
 
 Shape::Shape()
 {
-
+    angle = 0;
 }
 
-QPoint Shape::rotate_point(QPoint o, QPoint p, int d)
+/*QPoint Shape::rotate_point(QPoint o, QPoint p, int d)
 {
     QPoint result;
     double angle = (double)d*3.1415926/180;
     result.setX((p.x()-o.x())*cos(angle)-(p.y()-o.y())*sin(angle)+o.x());
     result.setY((p.x()-o.x())*sin(angle)+(p.y()-o.y())*cos(angle)+o.y());
     return result;
-}
+}*/
 
 QPoint Shape::scale_point(QPoint o, QPoint p, double s)
 {

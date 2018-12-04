@@ -7,7 +7,7 @@ class Line:public Shape
 public:
     Line();
     void paint(QPainter &painter);
-    void rotate(Shape *s, int d);
+    void rotate_paint(QPainter &painter);
 };
 
 #endif // LINE_H

@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-12-04T12:29:27
+# Project created by QtCreator 2018-12-04T12:45:58
 #
 #-------------------------------------------------
 
@@ -25,10 +25,39 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    mypainter.cpp \
+    shape.cpp \
+    line.cpp \
+    linecontrol.cpp \
+    shapecontrol.cpp \
+    circle.cpp \
+    circlecontrol.cpp \
+    ellipse.cpp \
+    ellipsecontrol.cpp \
+    rectange.cpp \
+    rectcontrol.cpp \
+    polygon.cpp \
+    polygoncontrol.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    mypainter.h \
+    shape.h \
+    line.h \
+    linecontrol.h \
+    shapecontrol.h \
+    circle.h \
+    circlecontrol.h \
+    ellipse.h \
+    ellipsecontrol.h \
+    rectange.h \
+    rectcontrol.h \
+    polygon.h \
+    polygoncontrol.h
 
 FORMS += \
         mainwindow.ui
+
+RESOURCES += \
+    icon.qrc

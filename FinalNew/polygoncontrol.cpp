@@ -23,7 +23,7 @@ void PolygonControl::onMousePressEvent(QMouseEvent *event)
         if((curpolygon->getCenter().rx()-10<event->pos().rx() && event->pos().rx()<curpolygon->getCenter().rx()+10)
          &&(curpolygon->getCenter().ry()-10<event->pos().ry() && event->pos().ry()<curpolygon->getCenter().ry()+10))
         {
-            press_node = -2;
+            press_node = -2;//平移
             return;
         }
         for(int i = 0;i < curpolygon->getPoly_point().size();i++)
@@ -34,6 +34,13 @@ void PolygonControl::onMousePressEvent(QMouseEvent *event)
                 press_node = i;
                 return;
             }
+        }
+        if(curpolygon != NULL
+           &&(curpolygon->getRPoint().rx()-10<event->pos().rx() && event->pos().rx()<curpolygon->getRPoint().rx()+10)
+           &&(curpolygon->getRPoint().ry()-10<event->pos().ry() && event->pos().ry()<curpolygon->getRPoint().ry()+10))
+        {
+            press_node = -3;//旋转
+            return;
         }
     }
     if(event->button() == Qt::LeftButton)
@@ -75,10 +82,33 @@ void PolygonControl::onMouseMoveEvent(QMouseEvent *event)
             curpolygon->getPoly_point()[press_node] = event->pos();
         else if(press_node == -2)
             curpolygon->translate(event->pos().x()-curpolygon->getCenter().x(), event->pos().y()-curpolygon->getCenter().y());
+        else if(press_node == -3)
+        {
+            double x = (double)(event->pos().x()-curpolygon->getCenter().x())/(curpolygon->getCenter().y()-event->pos().y());
+            curpolygon->setAngle(atan(x)*360.0/(2*3.1415926));
+        }
         curpolygon->setOtherPoint();
     }
     else
     {
         curpolygon->getPoly_point()[curpolygon->getPoly_point().size()-1] = event->pos();
     }
+}
+
+int PolygonControl::onMousePassiveMoveEvent(QMouseEvent *e)
+{
+    if( curpolygon != NULL && curpolygon->getFinish())
+    {
+        for(int i = 0;i<curpolygon->getPoly_point().size();i++)
+            if((curpolygon->getPoly_point()[i].rx()-10<e->pos().rx() && e->pos().rx()<curpolygon->getPoly_point()[i].rx()+10)
+              &&(curpolygon->getPoly_point()[i].ry()-10<e->pos().ry() && e->pos().ry()<curpolygon->getPoly_point()[i].ry()+10))
+                return 1;//改变鼠标指针
+        if( (curpolygon->getCenter().rx()-10<e->pos().rx() && e->pos().rx()<curpolygon->getCenter().rx()+10)
+        &&(curpolygon->getCenter().ry()-10<e->pos().ry() && e->pos().ry()<curpolygon->getCenter().ry()+10))
+            return 1;
+        if( (curpolygon->getRPoint().rx()-10<e->pos().rx() && e->pos().rx()<curpolygon->getRPoint().rx()+10)
+        &&(curpolygon->getRPoint().ry()-10<e->pos().ry() && e->pos().ry()<curpolygon->getRPoint().ry()+10))
+            return 1;
+    }
+    return 0;
 }

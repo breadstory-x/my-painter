@@ -2,7 +2,7 @@
 
 Circle::Circle()
 {
-
+    //angle = 0;
 }
 
 void Circle::paint(QPainter *painter)
@@ -11,6 +11,10 @@ void Circle::paint(QPainter *painter)
     if(!(start_one.x()<start_four.x()&&start_one.y()<start_four.y()))
         r = 0;
     else*/
+    /*painter->translate(center.x(),center.y());
+    painter->rotate(angle);
+    painter->translate(-center.x(),-center.y());*/
+
     int r = abs((start_one.y() - start_four.y())/2)>abs((start_one.x() - start_four.x())/2)?abs((start_one.y() - start_four.y())/2):abs((start_one.x() - start_four.x())/2);//半径
     int rx = r + (start_one.x()<start_four.x()?start_one.x():start_four.x());//原点离圆心的距离
     int ry = r + (start_one.y()<start_four.y()?start_one.y():start_four.y());//原点离圆心的距离
@@ -47,6 +51,10 @@ void Circle::paint(QPainter *painter)
         painter->drawPoint(-y+rx,-x+ry);
         painter->drawPoint(y+rx,-x+ry);
     }
+
+    /*painter->translate(center.x(),center.y());
+    painter->rotate(-angle);
+    painter->translate(-center.x(),-center.y());*/
 }
 
 void Circle::mark_paint(QPainter *painter)
@@ -54,6 +62,11 @@ void Circle::mark_paint(QPainter *painter)
     paint(painter);
 
     QPainter assist_painter(painter->device());//用于画辅助线和控制点的painter
+
+    /*assist_painter.translate(center.x(),center.y());
+    assist_painter.rotate(angle);
+    assist_painter.translate(-center.x(),-center.y());*/
+
     QPen pen;
     pen.setWidth(1);
     pen.setColor(Qt::blue);
@@ -73,6 +86,11 @@ void Circle::mark_paint(QPainter *painter)
     assist_painter.drawEllipse(start_three.x()-5,start_three.y()-5,10,10);
     assist_painter.drawEllipse(start_four.x()-5,start_four.y()-5,10,10);
     assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
+    //assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
+
+    /*assist_painter.translate(center.x(),center.y());
+    assist_painter.rotate(-angle);
+    assist_painter.translate(-center.x(),-center.y());*/
 
 }
 

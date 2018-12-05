@@ -1,4 +1,5 @@
 ﻿#include "circlecontrol.h"
+#include<QCursor>
 
 CircleControl::CircleControl()
 {
@@ -59,17 +60,52 @@ void CircleControl::onMouseMoveEvent(QMouseEvent *event)
     else if(press_node == OTHER)
     {
         curcircle->setStart_four(event->pos());
-        /*int r = abs((curcircle->getStart_one().y() - curcircle->getStart_four().y())/2)>abs((curcircle->getStart_one().x() - curcircle->getStart_four().x())/2)?abs((curcircle->getStart_one().y() - curcircle->getStart_four().y())/2):abs((curcircle->getStart_one().x() - curcircle->getStart_four().x())/2);//半径
-        if((curcircle->getStart_one().x()+2*r == curcircle->getStart_four().x() || curcircle->getStart_one().x()-2*r == curcircle->getStart_four().x()) && curcircle->getStart_four().y() > curcircle->getStart_one().y())
+        /*int r = abs((curcircle->getStart_one().y() - event->pos().y())/2)>abs((curcircle->getStart_one().x() - event->pos().x())/2)?abs((curcircle->getStart_one().y() - event->pos().y())/2):abs((curcircle->getStart_one().x() - event->pos().x())/2);//半径
+        if((curcircle->getStart_one().x()+2*r == event->pos().x() || curcircle->getStart_one().x()-2*r == event->pos().x()) && event->pos().y() > curcircle->getStart_one().y())
+        {
+            curcircle->getStart_four().setX(event->pos().x());
             curcircle->getStart_four().setY(curcircle->getStart_one().y()+2*r);
-        else if((curcircle->getStart_one().x()+2*r == curcircle->getStart_four().x() || curcircle->getStart_one().x()-2*r == curcircle->getStart_four().x())&& curcircle->getStart_four().y() < curcircle->getStart_one().y())
+        }
+        else if((curcircle->getStart_one().x()+2*r == event->pos().x() || curcircle->getStart_one().x()-2*r == event->pos().x())&& event->pos().y() < curcircle->getStart_one().y())
+        {
+            curcircle->getStart_four().setX(event->pos().x());
             curcircle->getStart_four().setY(curcircle->getStart_one().y()-2*r);
-        else if((curcircle->getStart_one().y()+2*r == curcircle->getStart_four().y() || curcircle->getStart_one().y()-2*r == curcircle->getStart_four().y()) && curcircle->getStart_four().x() > curcircle->getStart_one().x())
+        }
+        else if((curcircle->getStart_one().y()+2*r == event->pos().y() || curcircle->getStart_one().y()-2*r == event->pos().y()) && event->pos().x() > curcircle->getStart_one().x())
+        {
+            curcircle->getStart_four().setY(event->pos().y());
             curcircle->getStart_four().setX(curcircle->getStart_one().x()+2*r);
-        else if((curcircle->getStart_one().y()+2*r == curcircle->getStart_four().y() || curcircle->getStart_one().y()-2*r == curcircle->getStart_four().y()) && curcircle->getStart_four().x() < curcircle->getStart_one().x())
-            curcircle->getStart_four().setX(curcircle->getStart_one().x()-2*r);*/
+        }
+        else if((curcircle->getStart_one().y()+2*r == event->pos().y() || curcircle->getStart_one().y()-2*r == event->pos().y()) && event->pos().x() < curcircle->getStart_one().x())
+        {
+            curcircle->getStart_four().setY(event->pos().y());
+            curcircle->getStart_four().setX(curcircle->getStart_one().x()-2*r);
+        }*/
     }
     else if(press_node == CENTER)
         curcircle->translate(event->pos().x()-curcircle->getCenter().x(), event->pos().y()-curcircle->getCenter().y());
     curcircle->setOtherPoint();
+}
+
+
+int CircleControl::onMousePassiveMoveEvent(QMouseEvent *e)
+{
+    if( curcircle != NULL &&
+        (( (curcircle->getStart_one().rx()-10<e->pos().rx() && e->pos().rx()<curcircle->getStart_one().rx()+10)
+        &&(curcircle->getStart_one().ry()-10<e->pos().ry() && e->pos().ry()<curcircle->getStart_one().ry()+10))
+        ||
+        ( (curcircle->getStart_two().rx()-10<e->pos().rx() && e->pos().rx()<curcircle->getStart_two().rx()+10)
+        &&(curcircle->getStart_two().ry()-10<e->pos().ry() && e->pos().ry()<curcircle->getStart_two().ry()+10))
+        ||
+        ( (curcircle->getStart_three().rx()-10<e->pos().rx() && e->pos().rx()<curcircle->getStart_three().rx()+10)
+        &&(curcircle->getStart_three().ry()-10<e->pos().ry() && e->pos().ry()<curcircle->getStart_three().ry()+10))
+        ||
+        ( (curcircle->getStart_four().rx()-10<e->pos().rx() && e->pos().rx()<curcircle->getStart_four().rx()+10)
+        &&(curcircle->getStart_four().ry()-10<e->pos().ry() && e->pos().ry()<curcircle->getStart_four().ry()+10))
+        ||
+        ( (curcircle->getCenter().rx()-10<e->pos().rx() && e->pos().rx()<curcircle->getCenter().rx()+10)
+        &&(curcircle->getCenter().ry()-10<e->pos().ry() && e->pos().ry()<curcircle->getCenter().ry()+10))))
+        return 1;
+    else
+        return 0;
 }

@@ -4,8 +4,10 @@
 #include<vector>
 #include<QMouseEvent>
 #include"shape.h"
+#include<math.h>
+#include<QDebug>
 
-enum CirclePressNode{OTHER,START_ONE,START_TWO,START_THREE,START_FOUR,CENTER};//START_ONE为起始点，其他的按顺时针旋转
+enum CirclePressNode{OTHER,START_ONE,START_TWO,START_THREE,START_FOUR,CENTER, ROTATE};//START_ONE为起始点，其他的按顺时针旋转
 
 class ShapeControl
 {
@@ -14,7 +16,7 @@ public:
     /*virtual void draw_all()=0;*/
     virtual void onMousePressEvent(QMouseEvent *event)=0;
     virtual void onMouseMoveEvent(QMouseEvent *event)=0; //鼠标按下时鼠标的移动
-    //virtual void onMousePassiveMoveEvent(QMouseEvent *event)=0; //鼠标未被按下时鼠标的移动
+    virtual int onMousePassiveMoveEvent(QMouseEvent *e)=0; //鼠标未被按下时鼠标的移动
 
 protected:
     std::vector<Shape*> *all_shape;

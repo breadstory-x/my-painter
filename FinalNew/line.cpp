@@ -2,13 +2,14 @@
 
 Line::Line()
 {
-
+    angle = 0;
 }
 
 Line::Line(QPoint start, QPoint end)
 {
     this->start = start;
     this->end = end;
+    angle = 0;
 }
 
 int prePrint_line(QPoint startPos, QPoint endPos)
@@ -31,6 +32,10 @@ int prePrint_line(QPoint startPos, QPoint endPos)
 
 void Line::paint(QPainter *painter)
 {
+    painter->translate(center.x(),center.y());
+    painter->rotate(angle);
+    painter->translate(-center.x(),-center.y());
+
     QPoint newstart = start, newend = end;
     if(newend.x() < newstart.x())
     {
@@ -120,6 +125,10 @@ void Line::paint(QPainter *painter)
         break;
 
     }
+
+    painter->translate(center.x(),center.y());
+    painter->rotate(-angle);
+    painter->translate(-center.x(),-center.y());
 }
 
 void Line::mark_paint(QPainter *painter)
@@ -127,6 +136,11 @@ void Line::mark_paint(QPainter *painter)
     paint(painter);
 
     QPainter assist_painter(painter->device());//用于画辅助线和控制点的painter
+
+    assist_painter.translate(center.x(),center.y());
+    assist_painter.rotate(angle);
+    assist_painter.translate(-center.x(),-center.y());
+
     QPen pen;
     pen.setWidth(1);
     pen.setColor(Qt::blue);
@@ -135,6 +149,11 @@ void Line::mark_paint(QPainter *painter)
     assist_painter.drawEllipse(start.x()-5,start.y()-5,10,10);
     assist_painter.drawEllipse(end.x()-5,end.y()-5,10,10);
     assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
+    assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
+
+    assist_painter.translate(center.x(),center.y());
+    assist_painter.rotate(-angle);
+    assist_painter.translate(-center.x(),-center.y());
 
 }
 
@@ -142,6 +161,8 @@ void Line::setOtherPoint()
 {
     center.setX((start.x()+end.x())/2);
     center.setY((start.y()+end.y())/2);
+    rotate_point.setX(center.x());
+    rotate_point.setY(center.y()-40);
 }
 
 void Line::translate(int x, int y)

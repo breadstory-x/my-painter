@@ -3,8 +3,9 @@
 Polygon::Polygon()
 {
     finish = false;
+    angle = 0;
 }
-/*
+
 int prePrint_poly(QPoint startPos, QPoint endPos)
 {
     int x0 = startPos.x();
@@ -114,22 +115,33 @@ void Polygon::paint_line(QPainter *painter, int i, int j)
         break;
 
     }
-}*/
+}
 
 void Polygon::paint(QPainter *painter)
 {
-
+    if(finish)
+    {
+        painter->translate(center.x(),center.y());
+        painter->rotate(angle);
+        painter->translate(-center.x(),-center.y());
+    }
     for(int i = 1;i<poly_point.size();i++)
     {
-        Line newline(poly_point[i-1],poly_point[i]);
-        newline.paint(painter);
-        //paint_line(painter,i-1,i);
+        //Line newline(poly_point[i-1],poly_point[i]);
+        //newline.paint(painter);
+        paint_line(painter,i-1,i);
     }
     if(finish == true)
     {
-        Line newline(poly_point[0],poly_point[poly_point.size()-1]);
-        newline.paint(painter);
-        //paint_line(painter, 0, poly_point.size()-1);
+        //Line newline(poly_point[0],poly_point[poly_point.size()-1]);
+        //newline.paint(painter);
+        paint_line(painter, 0, poly_point.size()-1);
+    }
+    if(finish)
+    {
+        painter->translate(center.x(),center.y());
+        painter->rotate(-angle);
+        painter->translate(-center.x(),-center.y());
     }
 }
 void Polygon::mark_paint(QPainter *painter)
@@ -138,6 +150,11 @@ void Polygon::mark_paint(QPainter *painter)
     if(finish)
     {
         QPainter assist_painter(painter->device());//用于画辅助线和控制点的painter
+
+        assist_painter.translate(center.x(),center.y());
+        assist_painter.rotate(angle);
+        assist_painter.translate(-center.x(),-center.y());
+
         QPen pen;
         pen.setWidth(1);
         pen.setColor(Qt::blue);
@@ -156,6 +173,11 @@ void Polygon::mark_paint(QPainter *painter)
             assist_painter.drawEllipse(poly_point[i].x()-5,poly_point[i].y()-5,10,10);
 
         assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
+        assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
+
+        assist_painter.translate(center.x(),center.y());
+        assist_painter.rotate(-angle);
+        assist_painter.translate(-center.x(),-center.y());
     }
 
 
@@ -199,5 +221,7 @@ void Polygon::setOtherPoint()
 
     center.setX((start_one.x()+start_four.x())/2);
     center.setY((start_one.y()+start_four.y())/2);
+    rotate_point.setX(center.x());
+    rotate_point.setY(start_one.y()-40);
 
 }

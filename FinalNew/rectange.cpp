@@ -2,11 +2,15 @@
 
 Rectange::Rectange()
 {
-
+    angle = 0;
 }
 
 void Rectange::paint(QPainter *painter)
 {
+    painter->translate(center.x(),center.y());
+    painter->rotate(angle);
+    painter->translate(-center.x(),-center.y());
+
     int startx = start_one.x()<start_four.x()?start_one.x():start_four.x();
     int starty = start_one.y()<start_four.y()?start_one.y():start_four.y();
     int endx = start_one.x()>start_four.x()?start_one.x():start_four.x();
@@ -21,6 +25,9 @@ void Rectange::paint(QPainter *painter)
         painter->drawPoint(start_one.x(),i);
         painter->drawPoint(start_four.x(), i);
     }
+    painter->translate(center.x(),center.y());
+    painter->rotate(-angle);
+    painter->translate(-center.x(),-center.y());
 }
 
 void Rectange::mark_paint(QPainter *painter)
@@ -28,6 +35,11 @@ void Rectange::mark_paint(QPainter *painter)
     paint(painter);
 
     QPainter assist_painter(painter->device());//用于画辅助线和控制点的painter
+
+    assist_painter.translate(center.x(),center.y());
+    assist_painter.rotate(angle);
+    assist_painter.translate(-center.x(),-center.y());
+
     QPen pen;
     pen.setWidth(1);
     pen.setColor(Qt::blue);
@@ -47,6 +59,11 @@ void Rectange::mark_paint(QPainter *painter)
     assist_painter.drawEllipse(start_three.x()-5,start_three.y()-5,10,10);
     assist_painter.drawEllipse(start_four.x()-5,start_four.y()-5,10,10);
     assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
+    assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
+
+    assist_painter.translate(center.x(),center.y());
+    assist_painter.rotate(-angle);
+    assist_painter.translate(-center.x(),-center.y());
 
 }
 
@@ -62,6 +79,8 @@ void Rectange::setOtherPoint()
 {
     center.setX((start_one.x()+start_four.x())/2);
     center.setY((start_one.y()+start_four.y())/2);
+    rotate_point.setX(center.x());
+    rotate_point.setY(start_one.y()-40);
 
     start_two.setX(start_four.x());
     start_two.setY(start_one.y());

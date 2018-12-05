@@ -31,10 +31,11 @@ public slots:
         }
 
 private:
-    QPixmap *pix;
-    int curShapecontorl;
-    std::vector<ShapeControl*>shapecontrol;
-    std::vector<Shape*>all_shape;
+    QPixmap *pix;//画布
+    int curShapecontorl;//当前模式
+    int press;//鼠标是否被按下
+    std::vector<ShapeControl*>shapecontrol;//存放所有图形的control类
+    std::vector<Shape*>all_shape;//存放所有已画完的图形
 
 protected:
    void paintEvent(QPaintEvent* e);

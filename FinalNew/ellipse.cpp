@@ -2,12 +2,17 @@
 
 Ellipse::Ellipse()
 {
-
+    angle = 0;
 }
 
 void Ellipse::paint(QPainter *painter)
 {
     //painter.drawEllipse(start.x(),start.y(),end.x()-start.x(),end.y()-start.y());
+
+    painter->translate(center.x(),center.y());
+    painter->rotate(angle);
+    painter->translate(-center.x(),-center.y());
+
      double rx = abs(start_one.x()-start_four.x())/2;//长半轴
      double ry = abs(start_one.y()-start_four.y())/2;//短半轴
      double heartx = rx+(start_one.x()<start_four.x()?start_one.x():start_four.x());//中心x坐标
@@ -58,6 +63,10 @@ void Ellipse::paint(QPainter *painter)
          painter->drawPoint(-x+heartx, -y+hearty);
          painter->drawPoint(x+heartx, -y+hearty);
      }
+
+     painter->translate(center.x(),center.y());
+     painter->rotate(-angle);
+     painter->translate(-center.x(),-center.y());
 }
 
 void Ellipse::mark_paint(QPainter *painter)
@@ -65,6 +74,11 @@ void Ellipse::mark_paint(QPainter *painter)
     paint(painter);
 
     QPainter assist_painter(painter->device());//用于画辅助线和控制点的painter
+
+    assist_painter.translate(center.x(),center.y());
+    assist_painter.rotate(angle);
+    assist_painter.translate(-center.x(),-center.y());
+
     QPen pen;
     pen.setWidth(1);
     pen.setColor(Qt::blue);
@@ -84,6 +98,11 @@ void Ellipse::mark_paint(QPainter *painter)
     assist_painter.drawEllipse(start_three.x()-5,start_three.y()-5,10,10);
     assist_painter.drawEllipse(start_four.x()-5,start_four.y()-5,10,10);
     assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
+    assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
+
+    assist_painter.translate(center.x(),center.y());
+    assist_painter.rotate(-angle);
+    assist_painter.translate(-center.x(),-center.y());
 
 }
 
@@ -99,6 +118,8 @@ void Ellipse::setOtherPoint()
 {
     center.setX((start_one.x()+start_four.x())/2);
     center.setY((start_one.y()+start_four.y())/2);
+    rotate_point.setX(center.x());
+    rotate_point.setY(start_one.y()-40);
 
     start_two.setX(start_four.x());
     start_two.setY(start_one.y());

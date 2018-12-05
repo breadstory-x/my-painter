@@ -12,6 +12,7 @@ public:
 
     void onMousePressEvent(QMouseEvent *event);
     void onMouseMoveEvent(QMouseEvent *event); //鼠标按下时鼠标的移动
+    int onMousePassiveMoveEvent(QMouseEvent *e);
 
 private:
     Circle* curcircle;

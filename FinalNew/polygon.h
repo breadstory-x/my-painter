@@ -17,9 +17,13 @@ public:
     void setFinish(bool x){finish = x;}
     bool getFinish(){return finish;}
 
-    //void paint_line(QPainter *painter, int i, int j);
+    void paint_line(QPainter *painter, int i, int j);
     void setOtherPoint();
+    void setAngle(int angle){this->angle = angle;}
     QPoint getCenter(){return center;}
+    QPoint getRPoint(){return rotate_point;}
+    int getAngle(){return angle;}
+
 private:
     std::vector<QPoint>poly_point;
     bool finish;
@@ -28,6 +32,8 @@ private:
     QPoint start_three;
     QPoint start_four;
     QPoint center;
+    QPoint rotate_point;
+    int angle;
 };
 
 #endif // POLYGON_H

@@ -36,6 +36,10 @@ void EllipseControl::onMousePressEvent(QMouseEvent *event)
             &&(curellipse->getCenter().rx()-10<event->pos().rx() && event->pos().rx()<curellipse->getCenter().rx()+10)
             &&(curellipse->getCenter().ry()-10<event->pos().ry() && event->pos().ry()<curellipse->getCenter().ry()+10))
         press_node = CENTER;
+    else if(curellipse != NULL
+            &&(curellipse->getRPoint().rx()-10<event->pos().rx() && event->pos().rx()<curellipse->getRPoint().rx()+10)
+            &&(curellipse->getRPoint().ry()-10<event->pos().ry() && event->pos().ry()<curellipse->getRPoint().ry()+10))
+        press_node = ROTATE;
     else
     {
         press_node = OTHER;
@@ -65,5 +69,35 @@ void EllipseControl::onMouseMoveEvent(QMouseEvent *event)
         curellipse->setStart_four(event->pos());
     else if(press_node == CENTER)
         curellipse->translate(event->pos().x()-curellipse->getCenter().x(), event->pos().y()-curellipse->getCenter().y());
+    else if(press_node == ROTATE)
+    {
+        double x = (double)(event->pos().x()-curellipse->getCenter().x())/(curellipse->getCenter().y()-event->pos().y());
+        curellipse->setAngle(atan(x)*360.0/(2*3.1415926));
+    }
     curellipse->setOtherPoint();
+}
+
+int EllipseControl::onMousePassiveMoveEvent(QMouseEvent *e)
+{
+    if( curellipse != NULL &&
+        (( (curellipse->getStart_one().rx()-10<e->pos().rx() && e->pos().rx()<curellipse->getStart_one().rx()+10)
+        &&(curellipse->getStart_one().ry()-10<e->pos().ry() && e->pos().ry()<curellipse->getStart_one().ry()+10))
+        ||
+        ( (curellipse->getStart_two().rx()-10<e->pos().rx() && e->pos().rx()<curellipse->getStart_two().rx()+10)
+        &&(curellipse->getStart_two().ry()-10<e->pos().ry() && e->pos().ry()<curellipse->getStart_two().ry()+10))
+        ||
+        ( (curellipse->getStart_three().rx()-10<e->pos().rx() && e->pos().rx()<curellipse->getStart_three().rx()+10)
+        &&(curellipse->getStart_three().ry()-10<e->pos().ry() && e->pos().ry()<curellipse->getStart_three().ry()+10))
+        ||
+        ( (curellipse->getStart_four().rx()-10<e->pos().rx() && e->pos().rx()<curellipse->getStart_four().rx()+10)
+        &&(curellipse->getStart_four().ry()-10<e->pos().ry() && e->pos().ry()<curellipse->getStart_four().ry()+10))
+        ||
+        ( (curellipse->getCenter().rx()-10<e->pos().rx() && e->pos().rx()<curellipse->getCenter().rx()+10)
+        &&(curellipse->getCenter().ry()-10<e->pos().ry() && e->pos().ry()<curellipse->getCenter().ry()+10))
+        ||
+        ( (curellipse->getRPoint().rx()-10<e->pos().rx() && e->pos().rx()<curellipse->getRPoint().rx()+10)
+        &&(curellipse->getRPoint().ry()-10<e->pos().ry() && e->pos().ry()<curellipse->getRPoint().ry()+10))))
+        return 1;
+    else
+        return 0;
 }

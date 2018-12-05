@@ -36,6 +36,10 @@ void RectControl::onMousePressEvent(QMouseEvent *event)
             &&(currect->getCenter().rx()-10<event->pos().rx() && event->pos().rx()<currect->getCenter().rx()+10)
             &&(currect->getCenter().ry()-10<event->pos().ry() && event->pos().ry()<currect->getCenter().ry()+10))
         press_node = CENTER;
+    else if(currect != NULL
+            &&(currect->getRPoint().rx()-10<event->pos().rx() && event->pos().rx()<currect->getRPoint().rx()+10)
+            &&(currect->getRPoint().ry()-10<event->pos().ry() && event->pos().ry()<currect->getRPoint().ry()+10))
+        press_node = ROTATE;
     else
     {
         press_node = OTHER;
@@ -65,5 +69,35 @@ void RectControl::onMouseMoveEvent(QMouseEvent *event)
         currect->setStart_four(event->pos());
     else if(press_node == CENTER)
         currect->translate(event->pos().x()-currect->getCenter().x(), event->pos().y()-currect->getCenter().y());
+    else if(press_node == ROTATE)
+    {
+        double x = (double)(event->pos().x()-currect->getCenter().x())/(currect->getCenter().y()-event->pos().y());
+        currect->setAngle(atan(x)*360.0/(2*3.1415926));
+    }
     currect->setOtherPoint();
+}
+
+int RectControl::onMousePassiveMoveEvent(QMouseEvent *e)
+{
+    if( currect != NULL &&
+        (( (currect->getStart_one().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_one().rx()+10)
+        &&(currect->getStart_one().ry()-10<e->pos().ry() && e->pos().ry()<currect->getStart_one().ry()+10))
+        ||
+        ( (currect->getStart_two().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_two().rx()+10)
+        &&(currect->getStart_two().ry()-10<e->pos().ry() && e->pos().ry()<currect->getStart_two().ry()+10))
+        ||
+        ( (currect->getStart_three().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_three().rx()+10)
+        &&(currect->getStart_three().ry()-10<e->pos().ry() && e->pos().ry()<currect->getStart_three().ry()+10))
+        ||
+        ( (currect->getStart_four().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_four().rx()+10)
+        &&(currect->getStart_four().ry()-10<e->pos().ry() && e->pos().ry()<currect->getStart_four().ry()+10))
+        ||
+        ( (currect->getCenter().rx()-10<e->pos().rx() && e->pos().rx()<currect->getCenter().rx()+10)
+        &&(currect->getCenter().ry()-10<e->pos().ry() && e->pos().ry()<currect->getCenter().ry()+10))
+        ||
+        ( (currect->getRPoint().rx()-10<e->pos().rx() && e->pos().rx()<currect->getRPoint().rx()+10)
+        &&(currect->getRPoint().ry()-10<e->pos().ry() && e->pos().ry()<currect->getRPoint().ry()+10))))
+        return 1;
+    else
+        return 0;
 }

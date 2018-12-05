@@ -11,7 +11,7 @@ public:
 
     void onMousePressEvent(QMouseEvent *event);
     void onMouseMoveEvent(QMouseEvent *event); //鼠标按下时鼠标的移动
-//    void onMousePassiveMoveEvent(QMouseEvent *event); //鼠标未被按下时鼠标的移动
+    int onMousePassiveMoveEvent(QMouseEvent *e); //鼠标未被按下时鼠标的移动
 
 private:
     Line* curline;

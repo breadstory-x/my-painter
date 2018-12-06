@@ -19,5 +19,7 @@
         <file>../icons/颜色.bmp</file>
         <file>../icons/圆.bmp</file>
         <file>../icons/直线.bmp</file>
+        <file>../icons/放大.bmp</file>
+        <file>../icons/缩小.bmp</file>
     </qresource>
 </RCC>

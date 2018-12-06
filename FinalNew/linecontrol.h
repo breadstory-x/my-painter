@@ -13,10 +13,15 @@ public:
     void onMouseMoveEvent(QMouseEvent *event); //鼠标按下时鼠标的移动
     int onMousePassiveMoveEvent(QMouseEvent *e); //鼠标未被按下时鼠标的移动
 
+    void scale(double x);
+    bool isEmpty();
+    void cut(SelectWindow *sw);
+    void clear_cur();
+    bool is_cur_null();
 private:
     Line* curline;
     int press_node;
-    //std::vector<Line*>all_line;
+    std::vector<Line*>all_line;
 };
 
 #endif // LINECONTROL_H

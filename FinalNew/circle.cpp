@@ -2,7 +2,7 @@
 
 Circle::Circle()
 {
-    //angle = 0;
+    angle = 0;
 }
 
 void Circle::paint(QPainter *painter)
@@ -82,8 +82,8 @@ void Circle::mark_paint(QPainter *painter)
     pen.setStyle(Qt::SolidLine);
     assist_painter.setPen(pen);
     assist_painter.drawEllipse(start_one.x()-5,start_one.y()-5,10,10);
-    assist_painter.drawEllipse(start_two.x()-5,start_two.y()-5,10,10);
-    assist_painter.drawEllipse(start_three.x()-5,start_three.y()-5,10,10);
+    //assist_painter.drawEllipse(start_two.x()-5,start_two.y()-5,10,10);
+    //assist_painter.drawEllipse(start_three.x()-5,start_three.y()-5,10,10);
     assist_painter.drawEllipse(start_four.x()-5,start_four.y()-5,10,10);
     assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
     //assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
@@ -102,6 +102,15 @@ void Circle::translate(int x, int y)
     start_four.ry()+=y;
 }
 
+void Circle::scale(double s)
+{
+    start_one = scale_point(center,start_one, s);
+    start_two = scale_point(center,start_two, s);
+    start_three = scale_point(center,start_three, s);
+    start_four = scale_point(center,start_four, s);
+    setOtherPoint();
+}
+
 void Circle::setOtherPoint()
 {
     center.setX((start_one.x()+start_four.x())/2);
@@ -111,4 +120,52 @@ void Circle::setOtherPoint()
     start_two.setY(start_one.y());
     start_three.setX(start_one.x());
     start_three.setY(start_four.y());
+}
+
+void Circle::setExactOne(QPoint old_one)
+{
+    int startx = start_four.x();
+    int starty = start_four.y();
+    int endx = old_one.x();
+    int endy = old_one.y();
+    int flag = 1;
+    if(startx < endx || starty < endy)
+        flag = 1;
+    else if(startx >= endx || starty >= endy)
+        flag = -1;
+
+    if(abs(startx-endx) > abs(starty-endy))
+    {
+        start_one.setX(startx+flag*abs(starty-endy));
+        start_one.setY(endy);
+    }
+    else if(abs(startx-endx) <= abs(starty-endy))
+    {
+        start_one.setX(endx);
+        start_one.setY(starty+flag*abs(startx-endx));
+    }
+}
+
+void Circle::setExactFour(QPoint old_four)
+{
+    int startx = start_one.x();
+    int starty = start_one.y();
+    int endx = old_four.x();
+    int endy = old_four.y();
+    int flag = 1;
+    if(startx < endx || starty < endy)
+        flag = 1;
+    else if(startx >= endx || starty >= endy)
+        flag = -1;
+
+    if(abs(startx-endx) > abs(starty-endy))
+    {
+        start_four.setX(startx+flag*abs(starty-endy));
+        start_four.setY(endy);
+    }
+    else if(abs(startx-endx) <= abs(starty-endy))
+    {
+        start_four.setX(endx);
+        start_four.setY(starty+flag*abs(startx-endx));
+    }
 }

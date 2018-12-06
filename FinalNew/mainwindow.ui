@@ -36,6 +36,12 @@
      <family>微软雅黑 Light</family>
     </font>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonTextUnderIcon</enum>
    </property>
@@ -45,6 +51,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionSave"/>
+   <addaction name="separator"/>
    <addaction name="actionLine"/>
    <addaction name="actionCircle"/>
    <addaction name="actionEllipse"/>
@@ -52,6 +60,14 @@
    <addaction name="actionPolygon"/>
    <addaction name="actionCurve"/>
    <addaction name="actionFill"/>
+   <addaction name="separator"/>
+   <addaction name="actionColor"/>
+   <addaction name="separator"/>
+   <addaction name="actionLarge"/>
+   <addaction name="actionLittle"/>
+   <addaction name="separator"/>
+   <addaction name="actionSelect"/>
+   <addaction name="actionCut"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLine">
@@ -136,6 +152,63 @@
    </property>
    <property name="text">
     <string>填充</string>
+   </property>
+  </action>
+  <action name="actionLarge">
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/放大.bmp</normaloff>:/icons/放大.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>放大</string>
+   </property>
+  </action>
+  <action name="actionLittle">
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/缩小.bmp</normaloff>:/icons/缩小.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>缩小</string>
+   </property>
+  </action>
+  <action name="actionColor">
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/颜色.bmp</normaloff>:/icons/颜色.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>颜色设置</string>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/矩形选择框.bmp</normaloff>:/icons/矩形选择框.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>选择框</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/裁剪.bmp</normaloff>:/icons/裁剪.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>裁剪</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/保存.bmp</normaloff>:/icons/保存.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>保存</string>
    </property>
   </action>
  </widget>

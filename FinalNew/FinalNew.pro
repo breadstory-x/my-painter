@@ -38,7 +38,9 @@ SOURCES += \
     rectange.cpp \
     rectcontrol.cpp \
     polygon.cpp \
-    polygoncontrol.cpp
+    polygoncontrol.cpp \
+    selectwindow.cpp \
+    swcontrol.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -54,7 +56,9 @@ HEADERS += \
     rectange.h \
     rectcontrol.h \
     polygon.h \
-    polygoncontrol.h
+    polygoncontrol.h \
+    selectwindow.h \
+    swcontrol.h
 
 FORMS += \
         mainwindow.ui

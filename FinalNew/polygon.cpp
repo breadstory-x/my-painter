@@ -169,8 +169,9 @@ void Polygon::mark_paint(QPainter *painter)
 
         pen.setStyle(Qt::SolidLine);
         assist_painter.setPen(pen);
-        for(int i =0;i<poly_point.size();i++)
-            assist_painter.drawEllipse(poly_point[i].x()-5,poly_point[i].y()-5,10,10);
+        if(angle == 0)
+            for(int i =0;i<poly_point.size();i++)
+                assist_painter.drawEllipse(poly_point[i].x()-5,poly_point[i].y()-5,10,10);
 
         assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
         assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
@@ -190,6 +191,13 @@ void Polygon::translate(int x, int y)
         poly_point[i].ry()+=y;
         poly_point[i].rx()+=x;
     }
+}
+
+void Polygon::scale(double s)
+{
+    for(int i = 0;i<poly_point.size();i++)
+        poly_point[i] = scale_point(center, poly_point[i], s);
+    setOtherPoint();
 }
 
 void Polygon::setOtherPoint()

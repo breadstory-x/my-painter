@@ -13,22 +13,49 @@ RectControl::RectControl(std::vector<Shape*> *all_shape)
     this->all_shape = all_shape;
 }
 
+bool RectControl::isEmpty()
+{
+    if(all_rectange.size() == 0)
+        return true;
+    else
+        return false;
+}
+
+void RectControl::clear_cur()
+{
+    if(currect != NULL)
+        currect = NULL;
+}
+
+bool RectControl::is_cur_null()
+{
+   if(currect != NULL)
+       return false;
+   else
+       return true;
+}
+
+void RectControl::scale(double x)
+{
+    currect->scale(x);
+}
+
 void RectControl::onMousePressEvent(QMouseEvent *event)
 {
     //判断点击处在直线开始点、结束点、其他位置
-    if(currect != NULL
+    if(currect != NULL && currect->getAngle() == 0
        &&(currect->getStart_one().rx()-10<event->pos().rx() && event->pos().rx()<currect->getStart_one().rx()+10)
        &&(currect->getStart_one().ry()-10<event->pos().ry() && event->pos().ry()<currect->getStart_one().ry()+10))
         press_node = START_ONE;
-    else if(currect != NULL
+    else if(currect != NULL && currect->getAngle() == 0
             &&(currect->getStart_two().rx()-10<event->pos().rx() && event->pos().rx()<currect->getStart_two().rx()+10)
             &&(currect->getStart_two().ry()-10<event->pos().ry() && event->pos().ry()<currect->getStart_two().ry()+10))
         press_node = START_TWO;
-    else if(currect != NULL
+    else if(currect != NULL && currect->getAngle() == 0
             &&(currect->getStart_three().rx()-10<event->pos().rx() && event->pos().rx()<currect->getStart_three().rx()+10)
             &&(currect->getStart_three().ry()-10<event->pos().ry() && event->pos().ry()<currect->getStart_three().ry()+10))
         press_node = START_THREE;
-    else if(currect != NULL
+    else if(currect != NULL && currect->getAngle() == 0
             &&(currect->getStart_four().rx()-10<event->pos().rx() && event->pos().rx()<currect->getStart_four().rx()+10)
             &&(currect->getStart_four().ry()-10<event->pos().ry() && event->pos().ry()<currect->getStart_four().ry()+10))
         press_node = START_FOUR;
@@ -37,14 +64,15 @@ void RectControl::onMousePressEvent(QMouseEvent *event)
             &&(currect->getCenter().ry()-10<event->pos().ry() && event->pos().ry()<currect->getCenter().ry()+10))
         press_node = CENTER;
     else if(currect != NULL
-            &&(currect->getRPoint().rx()-10<event->pos().rx() && event->pos().rx()<currect->getRPoint().rx()+10)
-            &&(currect->getRPoint().ry()-10<event->pos().ry() && event->pos().ry()<currect->getRPoint().ry()+10))
+            &&(currect->rotatePoint(currect->getCenter(), currect->getRPoint(), currect->getAngle()).rx()-10<event->pos().rx() && event->pos().rx()<currect->rotatePoint(currect->getCenter(), currect->getRPoint(), currect->getAngle()).rx()+10)
+            &&(currect->rotatePoint(currect->getCenter(), currect->getRPoint(), currect->getAngle()).ry()-10<event->pos().ry() && event->pos().ry()<currect->rotatePoint(currect->getCenter(), currect->getRPoint(), currect->getAngle()).ry()+10))
         press_node = ROTATE;
     else
     {
         press_node = OTHER;
         currect = new Rectange();
         all_shape->push_back(currect);
+        all_rectange.push_back(currect);
         currect->setStart_one(event->pos());
     }
 }
@@ -72,7 +100,10 @@ void RectControl::onMouseMoveEvent(QMouseEvent *event)
     else if(press_node == ROTATE)
     {
         double x = (double)(event->pos().x()-currect->getCenter().x())/(currect->getCenter().y()-event->pos().y());
-        currect->setAngle(atan(x)*360.0/(2*3.1415926));
+        if((currect->getCenter().y()-event->pos().y()>=0))
+            currect->setAngle(atan(x)*360.0/(2*3.1415926));
+        else
+            currect->setAngle(180.0 + atan(x)*360.0/(2*3.1415926));
     }
     currect->setOtherPoint();
 }
@@ -80,24 +111,26 @@ void RectControl::onMouseMoveEvent(QMouseEvent *event)
 int RectControl::onMousePassiveMoveEvent(QMouseEvent *e)
 {
     if( currect != NULL &&
-        (( (currect->getStart_one().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_one().rx()+10)
+        ((( currect->getAngle() == 0) && (currect->getStart_one().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_one().rx()+10)
         &&(currect->getStart_one().ry()-10<e->pos().ry() && e->pos().ry()<currect->getStart_one().ry()+10))
         ||
-        ( (currect->getStart_two().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_two().rx()+10)
+        (( currect->getAngle() == 0) && (currect->getStart_two().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_two().rx()+10)
         &&(currect->getStart_two().ry()-10<e->pos().ry() && e->pos().ry()<currect->getStart_two().ry()+10))
         ||
-        ( (currect->getStart_three().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_three().rx()+10)
+        (( currect->getAngle() == 0) && (currect->getStart_three().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_three().rx()+10)
         &&(currect->getStart_three().ry()-10<e->pos().ry() && e->pos().ry()<currect->getStart_three().ry()+10))
         ||
-        ( (currect->getStart_four().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_four().rx()+10)
+        (( currect->getAngle() == 0) && (currect->getStart_four().rx()-10<e->pos().rx() && e->pos().rx()<currect->getStart_four().rx()+10)
         &&(currect->getStart_four().ry()-10<e->pos().ry() && e->pos().ry()<currect->getStart_four().ry()+10))
         ||
         ( (currect->getCenter().rx()-10<e->pos().rx() && e->pos().rx()<currect->getCenter().rx()+10)
         &&(currect->getCenter().ry()-10<e->pos().ry() && e->pos().ry()<currect->getCenter().ry()+10))
         ||
-        ( (currect->getRPoint().rx()-10<e->pos().rx() && e->pos().rx()<currect->getRPoint().rx()+10)
-        &&(currect->getRPoint().ry()-10<e->pos().ry() && e->pos().ry()<currect->getRPoint().ry()+10))))
+        ( (currect->rotatePoint(currect->getCenter(), currect->getRPoint(), currect->getAngle()).rx()-10<e->pos().rx() && e->pos().rx()<currect->rotatePoint(currect->getCenter(), currect->getRPoint(), currect->getAngle()).rx()+10)
+        &&(currect->rotatePoint(currect->getCenter(), currect->getRPoint(), currect->getAngle()).ry()-10<e->pos().ry() && e->pos().ry()<currect->rotatePoint(currect->getCenter(), currect->getRPoint(), currect->getAngle()).ry()+10))))
         return 1;
     else
         return 0;
 }
+
+

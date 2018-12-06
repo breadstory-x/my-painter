@@ -11,6 +11,7 @@ public:
     //void clear();
 
     void translate(int x, int y);
+    void scale(double s);
 
     void setOtherPoint();//设置中点、第二三控制点
     void setStart_one(QPoint start){this->start_one = start;}

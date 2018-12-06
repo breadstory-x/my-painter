@@ -13,6 +13,7 @@ public:
     //void clear();
 
     void translate(int x, int y);
+    void scale(double s);
 
 
     void setOtherPoint();//设置中点

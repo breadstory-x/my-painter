@@ -12,6 +12,7 @@ public:
     //void clear();
 
     void translate(int x, int y);
+    void scale(double s);
 
     std::vector<QPoint> &getPoly_point(){return poly_point;}
     void setFinish(bool x){finish = x;}

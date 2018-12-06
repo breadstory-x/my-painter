@@ -146,8 +146,11 @@ void Line::mark_paint(QPainter *painter)
     pen.setColor(Qt::blue);
     assist_painter.setPen(pen);
     assist_painter.setBrush(Qt::white);
-    assist_painter.drawEllipse(start.x()-5,start.y()-5,10,10);
-    assist_painter.drawEllipse(end.x()-5,end.y()-5,10,10);
+    if(angle == 0)//没有旋转的时候可以编辑
+    {
+        assist_painter.drawEllipse(start.x()-5,start.y()-5,10,10);
+        assist_painter.drawEllipse(end.x()-5,end.y()-5,10,10);
+    }
     assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
     assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
 
@@ -161,8 +164,23 @@ void Line::setOtherPoint()
 {
     center.setX((start.x()+end.x())/2);
     center.setY((start.y()+end.y())/2);
-    rotate_point.setX(center.x());
-    rotate_point.setY(center.y()-40);
+
+    double k = ((double)(start.y()-end.y()))/(start.x()-end.x());//当前直线斜率
+    double k2 = -1/k;//带求直线斜率，即tanθ
+    double x = atan(k2);//角度
+    //double sinx = k2/sqrt(1+k2*k2);
+    //double cosx = 1/sqrt(1+k2*k2);
+
+    if(k>0)
+    {
+        rotate_point.setX(center.x()+40*cos(x));
+        rotate_point.setY(center.y()+40*sin(x));
+    }
+    else
+    {
+        rotate_point.setX(center.x()-40*cos(x));
+        rotate_point.setY(center.y()-40*sin(x));
+    }
 }
 
 void Line::translate(int x, int y)
@@ -171,4 +189,11 @@ void Line::translate(int x, int y)
     start.ry() += y;
     end.rx()+=x;
     end.ry()+=y;
+}
+
+void Line::scale(double s)
+{
+    start = scale_point(center,start, s);
+    end = scale_point(center,end, s);
+    setOtherPoint();
 }

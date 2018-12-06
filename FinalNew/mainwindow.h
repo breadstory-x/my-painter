@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include<QColorDialog>
 #include"mypainter.h"
 
 namespace Ui {
@@ -18,6 +19,10 @@ public:
 
 signals:
     void changeCurrentMode(modeCode newMode);
+    void emitscale(double x);
+    void changeCurrentColor(QColor);
+    void cutPicture();
+    void selectFilePath(QString s);
 
 public slots:
     void drawLineActionTriggered();
@@ -25,6 +30,17 @@ public slots:
     void drawCircleActionTriggered();
     void drawRectActionTriggered();
     void drawPolygonActionTriggered();
+    void drawCurveActionTriggered();
+    void fillActionTriggered();
+
+    void ColorButtonClicked();
+
+    void largeActionTriggered();
+    void littleActionTriggered();
+
+    void SelectButtonClicked();
+    void cutButtonClicked();
+    void SaveButtonClicked();
 
 private:
     Ui::MainWindow *ui;

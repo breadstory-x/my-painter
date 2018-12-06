@@ -93,10 +93,13 @@ void Ellipse::mark_paint(QPainter *painter)
 
     pen.setStyle(Qt::SolidLine);
     assist_painter.setPen(pen);
-    assist_painter.drawEllipse(start_one.x()-5,start_one.y()-5,10,10);
-    assist_painter.drawEllipse(start_two.x()-5,start_two.y()-5,10,10);
-    assist_painter.drawEllipse(start_three.x()-5,start_three.y()-5,10,10);
-    assist_painter.drawEllipse(start_four.x()-5,start_four.y()-5,10,10);
+    if(angle == 0)
+    {
+        assist_painter.drawEllipse(start_one.x()-5,start_one.y()-5,10,10);
+        assist_painter.drawEllipse(start_two.x()-5,start_two.y()-5,10,10);
+        assist_painter.drawEllipse(start_three.x()-5,start_three.y()-5,10,10);
+        assist_painter.drawEllipse(start_four.x()-5,start_four.y()-5,10,10);
+    }
     assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
     assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
 
@@ -114,12 +117,22 @@ void Ellipse::translate(int x, int y)
     start_four.ry()+=y;
 }
 
+void Ellipse::scale(double s)
+{
+    start_one = scale_point(center,start_one, s);
+    start_two = scale_point(center,start_two, s);
+    start_three = scale_point(center,start_three, s);
+    start_four = scale_point(center,start_four, s);
+    setOtherPoint();
+}
+
 void Ellipse::setOtherPoint()
 {
     center.setX((start_one.x()+start_four.x())/2);
     center.setY((start_one.y()+start_four.y())/2);
     rotate_point.setX(center.x());
     rotate_point.setY(start_one.y()-40);
+
 
     start_two.setX(start_four.x());
     start_two.setY(start_one.y());

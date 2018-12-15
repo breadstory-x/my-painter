@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 25 9pt &quot;微软雅黑 Light&quot;;</string>
+  </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -27,6 +30,8 @@
     <property name="title">
      <string>文件</string>
     </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -34,6 +39,10 @@
    <property name="font">
     <font>
      <family>微软雅黑 Light</family>
+     <pointsize>9</pointsize>
+     <weight>3</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
    </property>
    <property name="iconSize">
@@ -51,6 +60,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionClean"/>
+   <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
    <addaction name="separator"/>
    <addaction name="actionLine"/>
@@ -68,6 +79,8 @@
    <addaction name="separator"/>
    <addaction name="actionSelect"/>
    <addaction name="actionCut"/>
+   <addaction name="separator"/>
+   <addaction name="actionHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLine">
@@ -81,6 +94,9 @@
    <property name="text">
     <string>直线</string>
    </property>
+   <property name="statusTip">
+    <string>画一条直线</string>
+   </property>
   </action>
   <action name="actionCircle">
    <property name="checkable">
@@ -92,6 +108,9 @@
    </property>
    <property name="text">
     <string>圆</string>
+   </property>
+   <property name="statusTip">
+    <string>画一个圆</string>
    </property>
   </action>
   <action name="actionEllipse">
@@ -105,6 +124,9 @@
    <property name="text">
     <string>椭圆</string>
    </property>
+   <property name="statusTip">
+    <string>画一个椭圆</string>
+   </property>
   </action>
   <action name="actionRect">
    <property name="checkable">
@@ -116,6 +138,9 @@
    </property>
    <property name="text">
     <string>矩形</string>
+   </property>
+   <property name="statusTip">
+    <string>画一个矩形</string>
    </property>
   </action>
   <action name="actionPolygon">
@@ -129,6 +154,9 @@
    <property name="text">
     <string>多边形</string>
    </property>
+   <property name="statusTip">
+    <string>画一个多边形。单击鼠标左键并拖动画线段，单击右键结束画图</string>
+   </property>
   </action>
   <action name="actionCurve">
    <property name="checkable">
@@ -140,6 +168,9 @@
    </property>
    <property name="text">
     <string>曲线</string>
+   </property>
+   <property name="statusTip">
+    <string>贝塞尔曲线。单击鼠标左键并拖动画辅助线，当画完三条辅助线后生成曲线</string>
    </property>
   </action>
   <action name="actionFill">
@@ -153,6 +184,9 @@
    <property name="text">
     <string>填充</string>
    </property>
+   <property name="statusTip">
+    <string>默认为黑色，修改请点击颜色设置。</string>
+   </property>
   </action>
   <action name="actionLarge">
    <property name="icon">
@@ -160,6 +194,9 @@
      <normaloff>:/icons/放大.bmp</normaloff>:/icons/放大.bmp</iconset>
    </property>
    <property name="text">
+    <string>放大</string>
+   </property>
+   <property name="statusTip">
     <string>放大</string>
    </property>
   </action>
@@ -171,6 +208,9 @@
    <property name="text">
     <string>缩小</string>
    </property>
+   <property name="statusTip">
+    <string>缩小</string>
+   </property>
   </action>
   <action name="actionColor">
    <property name="icon">
@@ -179,6 +219,9 @@
    </property>
    <property name="text">
     <string>颜色设置</string>
+   </property>
+   <property name="statusTip">
+    <string>设置颜色，填充模式解锁，只能修改填充颜色，不能修改图形边框颜色。</string>
    </property>
   </action>
   <action name="actionSelect">
@@ -192,6 +235,9 @@
    <property name="text">
     <string>选择框</string>
    </property>
+   <property name="statusTip">
+    <string>选择要裁剪的直线范围</string>
+   </property>
   </action>
   <action name="actionCut">
    <property name="icon">
@@ -201,6 +247,9 @@
    <property name="text">
     <string>裁剪</string>
    </property>
+   <property name="statusTip">
+    <string>先画选择框再裁剪。选择框模式解锁。</string>
+   </property>
   </action>
   <action name="actionSave">
    <property name="icon">
@@ -209,6 +258,51 @@
    </property>
    <property name="text">
     <string>保存</string>
+   </property>
+   <property name="statusTip">
+    <string>保存</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/打开.bmp</normaloff>:/icons/打开.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>打开</string>
+   </property>
+   <property name="statusTip">
+    <string>打开3D图像</string>
+   </property>
+  </action>
+  <action name="actionClean">
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/新建.bmp</normaloff>:/icons/新建.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>清空</string>
+   </property>
+   <property name="toolTip">
+    <string>清空当前画布</string>
+   </property>
+   <property name="statusTip">
+    <string>清空当前画布</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icons/提示.bmp</normaloff>:/icons/提示.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>帮助</string>
+   </property>
+   <property name="toolTip">
+    <string>查看帮助</string>
+   </property>
+   <property name="statusTip">
+    <string>查看帮助</string>
    </property>
   </action>
  </widget>

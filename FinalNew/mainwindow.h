@@ -23,6 +23,7 @@ signals:
     void changeCurrentColor(QColor);
     void cutPicture();
     void selectFilePath(QString s);
+    void cleanPixmap();
 
 public slots:
     void drawLineActionTriggered();
@@ -41,6 +42,10 @@ public slots:
     void SelectButtonClicked();
     void cutButtonClicked();
     void SaveButtonClicked();
+    void OpenButtonClicked();
+    void CleanButtonClicked();
+
+    void helpActionTriggered();
 
 private:
     Ui::MainWindow *ui;

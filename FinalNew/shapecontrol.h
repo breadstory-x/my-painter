@@ -19,6 +19,7 @@ public:
     virtual void onMousePressEvent(QMouseEvent *event)=0;
     virtual void onMouseMoveEvent(QMouseEvent *event)=0; //鼠标按下时鼠标的移动
     virtual int onMousePassiveMoveEvent(QMouseEvent *e)=0; //鼠标未被按下时鼠标的移动
+    virtual void onMouseReleaseEvent(QMouseEvent *e){}
 
     virtual void scale(double x)=0;
     virtual bool isEmpty()=0;

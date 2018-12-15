@@ -5,6 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += opengl
+LIBS     +=-lopengl32 -lglu32
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -40,7 +42,11 @@ SOURCES += \
     polygon.cpp \
     polygoncontrol.cpp \
     selectwindow.cpp \
-    swcontrol.cpp
+    swcontrol.cpp \
+    curvecontrol.cpp \
+    curve.cpp \
+    glwidget.cpp \
+    helpdialogs.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -58,10 +64,15 @@ HEADERS += \
     polygon.h \
     polygoncontrol.h \
     selectwindow.h \
-    swcontrol.h
+    swcontrol.h \
+    curvecontrol.h \
+    curve.h \
+    glwidget.h \
+    helpdialogs.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    helpdialogs.ui
 
 RESOURCES += \
     icon.qrc

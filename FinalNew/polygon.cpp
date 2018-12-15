@@ -117,6 +117,9 @@ void Polygon::paint_line(QPainter *painter, int i, int j)
     }
 }
 
+
+
+
 void Polygon::paint(QPainter *painter)
 {
     if(finish)
@@ -143,6 +146,29 @@ void Polygon::paint(QPainter *painter)
         painter->rotate(-angle);
         painter->translate(-center.x(),-center.y());
     }
+
+    //画曲线实验
+    /*if(poly_point.size() >= 4)
+    {
+        int cx = poly_point[0].x();
+        int cy = poly_point[0].y();
+
+        int x0 = poly_point[0].x();
+        int y0 = poly_point[0].y();
+        int x1 = poly_point[1].x();
+        int y1 = poly_point[1].y();
+        int x2 = poly_point[2].x();
+        int y2 = poly_point[2].y();
+        int x3 = poly_point[3].x();
+        int y3 = poly_point[3].y();
+        painter->drawPoint(cx,cy);
+        for(double i = 0;i<=1.0;i+=0.001)
+        {
+            cx = x0*(1-i)*(1-i)*(1-i)+3*x1*i*(1-i)*(1-i)+3*x2*i*i*(1-i)+x3*i*i*i;
+            cy = y0*(1-i)*(1-i)*(1-i)+3*y1*i*(1-i)*(1-i)+3*y2*i*i*(1-i)+y3*i*i*i;
+            painter->drawPoint(cx,cy);
+        }
+    }*/
 }
 void Polygon::mark_paint(QPainter *painter)
 {
@@ -173,8 +199,17 @@ void Polygon::mark_paint(QPainter *painter)
             for(int i =0;i<poly_point.size();i++)
                 assist_painter.drawEllipse(poly_point[i].x()-5,poly_point[i].y()-5,10,10);
 
-        assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
+        //旋转点为橙色实心
+        pen.setColor(QColor(255,200,0));
+        assist_painter.setBrush(QColor(255,200,0));
+        assist_painter.setPen(pen);
         assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
+
+        //中心点为天蓝色实心
+        pen.setColor(QColor(85,170,255));
+        assist_painter.setBrush(QColor(85,170,255));
+        assist_painter.setPen(pen);
+        assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
 
         assist_painter.translate(center.x(),center.y());
         assist_painter.rotate(-angle);

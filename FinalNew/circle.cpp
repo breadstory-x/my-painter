@@ -85,6 +85,11 @@ void Circle::mark_paint(QPainter *painter)
     //assist_painter.drawEllipse(start_two.x()-5,start_two.y()-5,10,10);
     //assist_painter.drawEllipse(start_three.x()-5,start_three.y()-5,10,10);
     assist_painter.drawEllipse(start_four.x()-5,start_four.y()-5,10,10);
+
+    //中心点为天蓝色实心
+    pen.setColor(QColor(85,170,255));
+    assist_painter.setBrush(QColor(85,170,255));
+    assist_painter.setPen(pen);
     assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
     //assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
 

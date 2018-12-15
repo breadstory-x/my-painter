@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include"mypainter.h"
 #include <QFileDialog>
+#include "glwidget.h"
+#include"helpdialogs.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -11,7 +13,10 @@ MainWindow::MainWindow(QWidget *parent) :
     MyPainter *paintWidget = new MyPainter(this);
     setCentralWidget(paintWidget);
 
+    connect(ui->actionClean, SIGNAL(triggered()), this, SLOT(CleanButtonClicked()));
+    connect(this, SIGNAL(cleanPixmap()), paintWidget, SLOT(clean()));
 
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(OpenButtonClicked()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(SaveButtonClicked()));
     connect(this, SIGNAL(selectFilePath(QString)),paintWidget,SLOT(SaveFile(QString)));
 
@@ -36,9 +41,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionLarge, SIGNAL(triggered()), this, SLOT(largeActionTriggered()));
     connect(ui->actionLittle, SIGNAL(triggered()), this, SLOT(littleActionTriggered()));
     connect(this, SIGNAL(emitscale(double)), paintWidget, SLOT(scale(double)));
+
+    connect(ui->actionHelp, SIGNAL(triggered()), this, SLOT(helpActionTriggered()));
     ui->actionLine->setChecked(true);
     ui->actionColor->setEnabled(false);
     ui->actionCut->setEnabled(false);
+
+    setWindowTitle(u8"my painter");
 }
 
 MainWindow::~MainWindow()
@@ -206,8 +215,29 @@ void MainWindow::cutButtonClicked()
 
 void MainWindow::SaveButtonClicked()
 {
-    QString file_path = QFileDialog::getSaveFileName(this, "Select Path", "./NewPicture","Images (*.jpg);;All Files (*)");//第三个参数为打开对话框时的路径
+    QString file_path = QFileDialog::getSaveFileName(this, "Select Path", "./NewPicture","Images (*.jpg);;Images (*.bmp);;All Files (*)");//第三个参数为打开对话框时的路径
     if(!file_path.isEmpty())
         emit selectFilePath(file_path);
     //qDebug() << file_path;
+}
+
+void MainWindow::OpenButtonClicked()
+{
+    GLwidget *gl = new GLwidget();
+    gl->setWindowTitle(u8"3D图像的显示");
+    gl->resize(800,600);
+    gl->show();
+}
+
+void MainWindow::CleanButtonClicked()
+{
+    emit cleanPixmap();
+}
+
+void MainWindow::helpActionTriggered()
+{
+    HelpDialogs *h = new HelpDialogs;
+    h->setWindowTitle(u8"帮助");
+    h->setModal(false);
+    h->show();
 }

@@ -15,6 +15,7 @@
 #include"polygoncontrol.h"
 #include"swcontrol.h"
 #include"selectwindow.h"
+#include"curvecontrol.h"
 #include<QMessageBox>
 #include<QStack>
 #define WIDTH 1600
@@ -34,6 +35,7 @@ public slots:
         void scale(double x);
         void doCutPicture();
         void SaveFile(QString s);
+        void clean();
 private:
     QPixmap *pix;//画布
     int curShapecontorl;//当前模式

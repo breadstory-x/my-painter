@@ -14,11 +14,34 @@ MyPainter::MyPainter(QWidget *parent) : QWidget(parent)
     shapecontrol.push_back(new EllipseControl(&all_shape));
     shapecontrol.push_back(new RectControl(&all_shape));
     shapecontrol.push_back(new PolygonControl(&all_shape));
+    shapecontrol.push_back(new CurveControl(&all_shape));
 
+    setMaximumSize(1600,900);
     sw = new SWcontrol();
     setMouseTracking(true);
 }
 
+void MyPainter::clean()
+{
+    pix=new QPixmap(WIDTH,HEIGHT);
+    pix->fill(Qt::white);
+
+    curShapecontorl = 0;
+    press = 0;
+    color = Qt::black;
+    //origin_sw = new SelectWindow();
+    //shapecontrol.clear();
+    shapecontrol[0] = new LineControl(&all_shape);
+    shapecontrol[1] = new CircleControl(&all_shape);
+    shapecontrol[2] = new EllipseControl(&all_shape);
+    shapecontrol[3] = new RectControl(&all_shape);
+    shapecontrol[4] = new PolygonControl(&all_shape);
+    shapecontrol[5] = new CurveControl(&all_shape);
+    all_shape.clear();
+    sw = new SWcontrol();
+    setMouseTracking(true);
+    update();
+}
 void MyPainter::scale(double x)
 {
     if(curShapecontorl < 6)
@@ -31,7 +54,7 @@ void MyPainter::scale(double x)
 
 void MyPainter::MyFill(QPoint x)
 {
-    for(int i = 0;i < 5; i++)
+    for(int i = 0;i < 6; i++)
         shapecontrol[i]->clear_cur();
     QPainter toPixmap(pix);
     QPen pen;
@@ -121,7 +144,8 @@ void MyPainter::SaveFile(QString s)
     for(int i = 0;i<all_shape.size();i++)
         all_shape[i]->paint(&toPixmap);
     QImage image = pix->toImage();
-    image.save(s,"JPG");
+    //toPixmap.save();
+    image.save(s);
     QMessageBox::information(NULL,  u8"保存成功！", u8"保存成功！");
 
 }
@@ -169,6 +193,8 @@ void MyPainter::mouseMoveEvent(QMouseEvent *e)
 
 void MyPainter::mouseReleaseEvent(QMouseEvent *e)
 {
+    if(curShapecontorl == code_curve)
+        shapecontrol[curShapecontorl]->onMouseReleaseEvent(e);
     press = 0;
     update();
 }

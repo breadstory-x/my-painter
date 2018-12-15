@@ -151,8 +151,17 @@ void Line::mark_paint(QPainter *painter)
         assist_painter.drawEllipse(start.x()-5,start.y()-5,10,10);
         assist_painter.drawEllipse(end.x()-5,end.y()-5,10,10);
     }
-    assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
+    //旋转点为橙色实心
+    pen.setColor(QColor(255,200,0));
+    assist_painter.setBrush(QColor(255,200,0));
+    assist_painter.setPen(pen);
     assist_painter.drawEllipse(rotate_point.x()-5,rotate_point.y()-5,10,10);
+
+    //中心点为天蓝色实心
+    pen.setColor(QColor(85,170,255));
+    assist_painter.setBrush(QColor(85,170,255));
+    assist_painter.setPen(pen);
+    assist_painter.drawEllipse(center.x()-5,center.y()-5,10,10);
 
     assist_painter.translate(center.x(),center.y());
     assist_painter.rotate(-angle);

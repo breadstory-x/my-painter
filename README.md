@@ -12,16 +12,35 @@
 	颜色限定为黑色，画笔宽度限定为3点，不可修改。
 #### 直线、圆、椭圆、矩形的绘制
  选中相应图标，单击鼠标左键，拖动至合适位置释放即可。
+<div align="center">
+<img src="/picture/create-line.png" height="300" width="400" >
+<img src="/picture/create-ellipse.png" height="300" width="400" >
+</div>
 #### 多边形的绘制
  选中多边形图标，单击鼠标左键并拖动，绘制多边形的第一条边，再次单击单击鼠标左键并拖动，绘制多边形的第二条边，以此类推。当绘制完成时，单击鼠标右键即可封口。
+<div align="center">
+<img src="/picture/create-polygon1.png" height="300" width="400" >
+<img src="/picture/create-polygon2.png" height="300" width="400" >
+</div>
 #### 曲线的绘制
  与多边形类似，选中曲线图标，单击鼠标左键并拖动，绘制曲线的第一条辅助边，以同样的方法画三条辅助边后自动生成曲线。
+<div align="center">
+<img src="/picture/create-curve1.png" height="300" width="400" >
+<img src="/picture/create-curve2.png" height="300" width="400" >
+</div>
 #### 图形的编辑
  图形绘制完成后，可看到蓝色边框白色实心圆，他们是图形的控制点，鼠标移上去指针会变成十字形。鼠标左键拖动即可改变控制点的位置，完成编辑。
  - **控制点说明**：
  - 直线为两端点，圆为左上、右下两点，椭圆、矩形为左上、左下、右上、右下四点，多边形为各个端点，曲线为如图所示四点
+<div align="center">
+<img src="/picture/update-curve.png" height="300" width="400" >
+</div>
 #### 图形的填充
  选择填充按钮，可激活颜色设置图标，点击可修改颜料桶的颜色，默认为黑色。之后鼠标左键单击画布任意位置即可完成填充。
+<div align="center">
+<img src="/picture/fill1.png" height="300" width="400" >
+<img src="/picture/fill2.png" height="300" width="400" >
+</div>
 ### 二维图形的变换
 1. 平移
  - 平移控制点为图形中心的天蓝色实心点，鼠标左键点击并拖动即可改变图形位置。
@@ -59,11 +78,10 @@
 	- 鼠标
 		- 单击鼠标左键并拖动，可使图形旋转。
 		- 鼠标滑轮可改变视角远近。
-<figure class="half">
-    <img src="/picture/3D-1.png">
-    <img src="/picture/3D-2.png">
-</figure>
-
+<div align="center">
+<img src="/picture/3D-1.png" height="300" width="400" >
+<img src="/picture/3D-2.png" height="300" width="400" >
+</div>
 
 
 
